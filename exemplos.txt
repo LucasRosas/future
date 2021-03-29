@@ -1,0 +1,275 @@
+#1. Título Principal
+
+##1.1 Título Secundário
+
+###Título Terciário
+
+Para escrever um texto no estilo Título Principal basta colocar no início da linha o símbolo # e escrever o texto na frente. Para escrever um texto no estilo Título Secundário basta colocar no início da linha os símbolos ## e escrever o texto na frente. Para escrever um texto no estilo Título Terciário basta colocar no início da linha os símbolos ### e escrever o texto na frente.
+
+Para escrever um texto em negrito, basta colocar o texto entre símbolos de asteriscos: *Esse é um exemplo de como isso ocorre*. Agora, para escrever o texto em itálico basta colocar o texto entre pares de asteriscos: **Esse é um exemplo de como isso ocorre**. Finalmente, para escrever o texto sublinhado basta colocar o texto entre trios de asteriscos: ***Esse é um exemplo de como isso ocorre***. 
+
+###Finalizando a Seção
+
+Para finalizar uma seção do livro basta colocar em uma única linha um _. Como na linha a seguir:  
+
+_
+
+## 1.2 Colocando espaço e imagens entre parágrafos 
+
+Como você deve ter percebido, não adianta usar mais de um espaço entre palavras. 
+
+
+
+
+
+Mas podemos usar espaços entre linhas para espaçar os parágrafos.
+
+###Adicionando imagens
+
+Para colocar uma imagem centralizada, basta escrever img no início de uma nova linha e o endereço da imagem na frente, usando espaço ou não. As imagens ficam sempre com no máximo 200px de altura e 90% da largura da seção.
+
+ Observe um exemplo com espaço:
+
+img https://images.unsplash.com/photo-1568572933382-74d440642117?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80
+
+Agora, observe um exemplo sem espaço:
+
+imghttps://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1027&q=80
+
+
+
+Para deixar a imagem no meio da linha, basta usar um _ entre "img" e o link e terminar o link com *_!*. Observe no exemplo a seguir:
+
+O determinante da matriz  img_https://wikimedia.org/api/rest_v1/media/math/render/svg/04d9745d88295a5cd02991810a561da9ae6a31ff_! é 1.
+
+_
+
+##1.3 Adicionando links e tabelas
+
+###Adicionando links
+
+Para adicionar um link basta escrever o link entre ties. Observe esse exemplo: ~ https://www.youtube.com/watch?v=qqyZkB1UCAg,Clique aqui para ver um vídeo do YouTube~. Agora você viu que isso funciona :D.
+
+### Colocando uma tabela
+
+Agora vamos tentar fazer a coisa mais difícil: uma tabela.
+
+||
+
+|Nome|Idade|Cidade|Valor|
+
+|Pedro|34|Belo Horizonte| R$ 1 200,00|
+
+|Tiago|54|São Paulo | R$ 1 200,00|
+
+|Gustavo|45|Florianópolis|R$ 1 200,00|
+
+|Rodrigo|32|Maringá|R$ 1 200,00|
+
+||
+
+Agora outra tabela:
+
+||
+
+|a11|a12|a13|
+
+|a21|a22|a23|
+
+|a31|a32|a33|
+
+|a41|a42|a43|
+
+||
+
+
+
+||
+
+|*Teorema de Pitágoras:*|
+
+|Se a > b ≥ c são as medidas dos lados de um triângulo retângulo, então $a^2=b^2+c^2$.\frac{2}{2} 
+ 
+
+||
+
+
+
+||
+
+|*Teorema de Pitágoras:*|Se a > b ≥ c são as medidas dos lados de um triângulo retângulo, então $a^2=b^2+c^2$.a^2=b^2+c^2a 
+ 
+ 
+ 
+
+||
+
+
+
+*Relação Fundamental da Trigonometria:*
+
+||
+
+|$sen^2(x)+cos^2(x)=1$|
+
+||
+
+_
+
+##1.4 Criando fórmulas matemáticas.
+
+Para criar uma fórmula matemática utilizaremos o Katex, assim, basta escrever desse lado o código entre $. Por exemplo:
+
+A fração $\frac{6}{2}$ é uma fração aparente. 
+
+A área de um quadrado de lado *x* é $A=x^2$.
+
+A fórmula resolutiva para uma equação do segundo grau da forma $ax^2+bx+c=0$ é $x=\frac{b^2-\sqrt{\Delta}}{2a}$ em que $\Delta = b^2-4ac$.
+
+Ao usar método de cofatores, podemos escrever  $det(A) =\begin{vmatrix}
+ 2&3  &0 \\ 
+ 4&5  & 0\\ 
+6 &7  & 3
+\end{vmatrix}=3.(2.5-3.4)=3.(10-12)=-6$.
+
+Para facilitar, você pode usar o site ~https://www.codecogs.com/latex/eqneditor.php?lang=pt-br,Code Cogs~ ou copiar o código do mathtype.
+
+_
+
+##1.5 Criando listas
+
+Vamos começar! basta usar um hífen no início de cada linha:
+
+- essa é uma lista de pontos
+
+- continua aqui 
+
+- e termina aqui
+
+
+
+Para criar uma lista ordenada, deve-se começar e terminar usando um *-#* para indicar que deve ser usada uma numeração.
+
+Primeira lista:
+
+-#
+
+-primeiro item
+
+-segundo item
+
+-terceiro item
+
+-quarto item
+
+-#
+
+Segunda lista:
+
+-#
+
+-Google
+
+-Yandex
+
+-Yahoo
+
+-Bing
+
+-#
+
+
+Cuidado com o uso dos sinais - e –. Observe
+
+-30.
+
+–30.
+
+_
+
+
+
+_
+
+##1.6 Usando iframes
+
+Existem duas formas de fazer isso:
+
+-*Método 1:* usando apenas a url
+
+Nesse caso, basta escrever iframe e a url dentro de colchetes na frente. A  largura e altura do iframe podem ser colocadas entre parêntesis e separadas por vírgula logo em seguida, tudo junto. Observe o exemplo:
+
+
+
+iframe{https://www.youtube.com/watch?v=imSRhX1H5Ps,90%,340px}
+
+A largura máxima é 90% da tela.
+
+-*Método 2:* usando o código completo
+
+Nesse caso, basta escrever iframe, _ e o código dentro de colchetes, tudo junto. Observe o exemplo:
+
+iframe_{<iframe width="560" height="315" src="https://www.youtube.com/embed/imSRhX1H5Ps" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>}
+
+_
+
+##1.7 Criando uma questão de completar:
+
+Para criar uma questão para completar, basta colocar a resposta certa entre parêntesis e asteriscos. Caso haja mais de uma resposta certa, adicionar vírgulas para separá-las dentro da marcação. Seguem os exemplos:
+
+img https://i.ibb.co/wJX3nz2/imagem-2021-03-28-134311.png
+
+Se torna:
+
+Complete with *is* ou *are*:
+
+A) We *(are)* the champions!
+
+B) *(Is,is)* there a drugstore near here?
+
+
+
+Observe a figura a seguir:
+
+imghttps://pagmenossupermercados.com.br/wp-content/uploads/2019/09/112019.png
+
+O nome desse fruto é *(jerimum,abóbora)*.
+
+
+
+Complete a tabela usando regra de três:
+
+||
+
+|Quantidade | Preço (R$)|
+
+|4|5|
+
+|8|*(10)*|
+
+|20|*(25)*|
+
+||
+
+
+
+_
+
+##1.7  Criando questões de múltipla escolha
+
+Para criar uma questão de múltipla escolha escrevemos a questão entre e as alternativas uma em cada linha depois de A), B), C) etc. A resposta certa deve ser marcada com um _ entre a letra e o parêntesis. A_). 
+
+
+
+_
+
+##1.8 Concluindo. 
+
+Por meio desse programinha podemos criar muitas coisas legais!
+
+
+
+
+
+
+

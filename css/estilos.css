@@ -1,0 +1,174 @@
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    width: 100%;
+}
+
+section:nth-child(even) {
+    background-color: rgba(190, 190, 190, 0.13);
+}
+
+#container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+#container>div {
+    overflow-y: auto;
+}
+
+#blocodenotas {
+    font-family: Consolas, Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    padding: 5px 10px;
+    color: aliceblue;
+    position: relative;
+    width: 50%;
+    height: calc(100% - 10px);
+    background-color: rgb(32, 32, 32);
+    white-space: pre-wrap;
+    outline: none;
+}
+
+#blocodenotas>div {
+    padding: 10px 0px;
+}
+
+#preview {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    position: relative;
+    width: 50%;
+    height: calc(100% - 10px);
+    padding: 5px 10px;
+    background-color: rgb(247, 247, 247);
+}
+
+p {
+    text-indent: 1.5em;
+    margin: 5px 0px;
+    line-height: 22px;
+    font-size: 15px;
+    text-align: justify;
+    max-height: 100%;
+    overflow-wrap: break-word;
+}
+
+section {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+h1 {
+    font-size: 32px;
+}
+
+h2 {
+    color: rgb(0, 121, 109)
+}
+
+h3 {
+    color: rgb(197, 105, 0);
+}
+
+li {
+    font-size: 15px;
+    text-indent: 1.5em;
+}
+
+img:not(.imgmiddle) {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 200px;
+    max-width: 90%;
+}
+
+a {
+    color: rgb(30, 117, 175);
+    cursor: pointer;
+}
+
+table {
+    margin: auto;
+    text-align: center;
+}
+
+tr:first-child {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-align: center;
+    color: #38316E;
+    background-color: #FAD8B2;
+}
+
+tr:nth-child(even) {
+    background-color: #E1E2E4;
+}
+
+td {
+    padding: 10px;
+}
+
+.imgmiddle {
+    vertical-align: middle !important;
+}
+
+.complete {
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    padding: 2px;
+    font-size: 15px;
+    border: 0px;
+    background-color: rgb(5, 151, 139);
+    outline: none;
+}
+
+.spanx {
+    display: none;
+    color: rgb(2, 187, 2)
+}
+
+.diviframe,
+.iframediv {
+    text-align: center;
+}
+
+iframe {
+    border: none;
+    margin: auto;
+}
+
+#botoes,
+#botoesf {
+    position: absolute;
+    bottom: 20px;
+    left: calc(10px);
+    display: flex;
+}
+
+#botoesf>div {
+    color: rgb(108, 0, 197);
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: Consolas, Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    padding: 10px;
+    margin: 5px;
+    z-index: 3;
+}
+
+#botoes>div {
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: Consolas, Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: transparent;
+    background-color: rgba(233, 233, 233, 0.3);
+    padding: 10px;
+    margin: 5px;
+    backdrop-filter: blur(10px);
+}
