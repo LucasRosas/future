@@ -22,9 +22,18 @@ function savehtml() {
 }
 
 function ajustar() {
+    roda()
     x = document.getElementById('blocodenotas')
     x.innerHTML = '<p>' + x.innerText.replaceAll('<br>', '</p><p>').replaceAll('\n', '</p><p>').replaceAll('div>', 'p>')
+    marcaiframe()
     roda()
+}
+
+function marcaiframe() {
+    x = document.getElementById('blocodenotas')
+    x.innerHTML = x.innerHTML.replaceAll('<p>iframe_', '<p class="iframe">iframe_')
+    document.getElementsByClassName('iframe')[0].innerText = 'iframe_{' + code[0] + '}'
+
 }
 
 var texto
@@ -34,8 +43,7 @@ var posfixo = '</section>'
 function roda() {
     entrada = document.getElementById('blocodenotas').innerHTML.replaceAll('<span style="text-indent: 1.5em;">', '').replaceAll('</span>', '')
     localStorage.setItem(texto, entrada)
-    entrada = entrada.replaceAll('div>', 'p>')
-    entrada = entrada.replaceAll('<p>_</p>', '</section><section>')
+    entrada = entrada.replaceAll('div>', 'p>').replaceAll('<p>iframe_', '<p class="iframe">iframe_').replaceAll('<p>_</p>', '</section><section>')
     let resp = []
     entrada = complete(entrada)
     let code = []
@@ -86,7 +94,7 @@ function iframe(x) {
         a[i] = `<div class='iframediv'><iframe src="${url}" height="${altura}" width="${largura}"></iframe></div>` + a[i].replace(`${url},${largura},${altura}}</p>`, '')
     }
     a = a.join('')
-    a = a.split('<p>iframe_{')
+    a = a.split('<p class="iframe">iframe_{')
     for (i = 1; i < a.length; i++) {
         code.push(a[i].split('}')[0].replaceAll('&lt;', '<').replaceAll('&gt;', '>'))
         a[i] = `<div class="diviframe">aqui vai um iframe</div>` + a[i].replace(`${a[i].split('}')[0]}}</p>`, '')
