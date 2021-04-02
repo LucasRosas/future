@@ -1,6 +1,17 @@
 var entrada
 
 
+
+function cornome(x) {
+    x.nextElementSibling.value = x.value
+    x.nextElementSibling.style.color = x.value
+    mudaestilo(x.id, x.value)
+}
+
+function corvalor(x) {
+    document.getElementById('c' + x.id).value = x.value
+}
+
 function savetxt() {
     var blob = new Blob([document.getElementById('blocodenotas').innerText], { type: "text/plain;charset=utf-8" });
     saveAs(blob, "fonte.txt");
@@ -29,6 +40,39 @@ function ajustar() {
     roda()
 }
 
+function config(y) {
+    x = document.getElementById('configuracoes')
+    a = document.getElementsByClassName('botoesf')
+
+    if (y.innerText === 'configurações') {
+        y.innerText = 'Salvar e fechar'
+        x.classList.remove('desativo')
+        x.classList.add('ativo')
+        y.style.backgroundColor = 'rgba(190, 62, 62, 0.3)'
+
+    } else {
+        y.innerText = 'configurações'
+        x.classList.add('desativo')
+        x.classList.remove('ativo')
+
+
+        y.style.backgroundColor = 'rgba(58, 58, 58, 0.3)'
+
+    }
+
+}
+
+function cort(x) {
+    x.nextElementSibling.value = x.value
+    x.nextElementSibling.focus()
+}
+
+function corc(x) {
+    document.getElementById(x.id + 't').value = x.value
+}
+
+
+
 function marcaiframe() {
     x = document.getElementById('blocodenotas')
     x.innerHTML = x.innerHTML.replaceAll('<p>iframe_', '<p class="iframe">iframe_')
@@ -37,13 +81,13 @@ function marcaiframe() {
 }
 
 var texto = 'memoria'
-var prefixo = '<section>'
+var prefixo = `<section class='completo'>`
 var posfixo = '</section>'
 
 function roda() {
     entrada = document.getElementById('blocodenotas').innerHTML.replaceAll('<span style="text-indent: 1.5em;">', '').replaceAll('</span>', '')
     localStorage.setItem(texto, entrada)
-    entrada = entrada.replaceAll('div>', 'p>').replaceAll('<p>iframe_', '<p class="iframe">iframe_').replaceAll('<p>_</p>', '</section><section>')
+    entrada = entrada.replaceAll('div>', 'p>').replaceAll('<p>iframe_', '<p class="iframe">iframe_').replaceAll('<p>_</p>', `<button class='botaocontinua' onclick="continua(this)">Continuar</button></section><section style="display:none">`)
     let resp = []
     entrada = complete(entrada)
     let code = []
@@ -75,6 +119,25 @@ function roda() {
         }, { left: "\\[", right: "\\]", display: true }, { left: "$", right: "$", display: false }, { left: "\\(", right: "\\)", display: false }]
     })
 
+}
+
+
+function continua(x) {
+    confere(x)
+    if (x.parentElement.classList.contains('completo')) {
+        x.parentElement.nextElementSibling.style.display = 'block'
+        x.style.display = 'none'
+    } else {
+        alert('Complete todas as Quests para continuar')
+    }
+}
+
+function confere(x) {
+    ncomplete = x.parentElement.getElementsByClassName('complete').length
+    ncerto = x.parentElement.getElementsByClassName('certo').length
+    if (ncomplete == ncerto) {
+        x.parentElement.classList.add('completo')
+    }
 }
 
 function chamaiframe() {
@@ -132,6 +195,7 @@ function verifica(x) {
         x.style.display = 'none';
         x.nextElementSibling.style.display = 'inline';
         x.nextElementSibling.textContent = resposta;
+        x.nextElementSibling.classList.add('certo')
     } else {
         x.style.backgroundColor = 'darkred';
     }
@@ -195,3 +259,9 @@ if (localStorage.getItem(texto).length > 40) {
 } else { document.getElementById('blocodenotas').innerHTML = '<p>que isso?</p>' }
 
 roda()
+
+
+function mudaestilo(a, b) {
+    document.documentElement.style.setProperty('--' + a, b);
+
+}

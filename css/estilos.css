@@ -1,3 +1,10 @@
+/*Dados Globais*/
+
+:root {
+    --font1: Verdana;
+    --cor0: #000000;
+}
+
 html {
     height: 100%;
     width: 100%;
@@ -10,10 +17,6 @@ body {
     width: 100%;
 }
 
-section:nth-child(even) {
-    background-color: rgba(190, 190, 190, 0.13);
-}
-
 #container {
     height: 100%;
     width: 100%;
@@ -21,17 +24,30 @@ section:nth-child(even) {
 }
 
 #container>div {
-    overflow-y: auto;
+    overflow-y: scroll;
+}
+
+#container>div::-webkit-scrollbar {
+    display: none;
+    /* Safari and Chrome */
 }
 
 #blocodenotas {
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+    scrollbar-width: none;
+    /* Firefox */
     font-family: Consolas, Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     padding: 5px 10px;
     color: aliceblue;
     position: relative;
     width: 50%;
     height: calc(100% - 10px);
-    background-color: rgb(32, 32, 32);
+    background: rgb(0, 40, 71);
+    background: -moz-linear-gradient(153deg, rgba(0, 40, 71, 1) 0%, rgba(8, 12, 27, 1) 100%);
+    background: -webkit-linear-gradient(153deg, rgba(0, 40, 71, 1) 0%, rgba(8, 12, 27, 1) 100%);
+    background: linear-gradient(153deg, rgba(0, 40, 71, 1) 0%, rgba(8, 12, 27, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#002847", endColorstr="#080c1b", GradientType=1);
     white-space: pre-wrap;
     outline: none;
 }
@@ -41,12 +57,17 @@ section:nth-child(even) {
 }
 
 #preview {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: var(--cor0);
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+    scrollbar-width: none;
+    /* Firefox */
+    font-family: var(--font1);
     position: relative;
     width: 50%;
     height: calc(100% - 10px);
     padding: 5px 10px;
-    background-color: rgb(247, 247, 247);
+    background-color: rgb(255, 255, 255);
 }
 
 p {
@@ -60,7 +81,17 @@ p {
 }
 
 section {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: var(--font1);
+    animation: revela 1.5s cubic-bezier(0, .41, .32, 1.01);
+}
+
+@keyframes revela {
+    from {
+        margin-top: 100px
+    }
+    to {
+        margin-top: 0
+    }
 }
 
 h1 {
@@ -106,8 +137,8 @@ tr:first-child {
     background-color: #FAD8B2;
 }
 
-tr:nth-child(even) {
-    background-color: #E1E2E4;
+tr {
+    background-color: #f3f3f3;
 }
 
 td {
@@ -153,22 +184,207 @@ iframe {
 }
 
 #botoesf>div {
-    color: rgb(108, 0, 197);
+    color: rgb(255, 255, 255);
     border-radius: 5px;
     cursor: pointer;
     font-family: Consolas, Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     padding: 10px;
+    background-color: rgba(58, 58, 58, 0.3);
+    backdrop-filter: blur(10px);
     margin: 5px;
+    z-index: 1;
+}
+
+#botoesf>div:first-of-type {
     z-index: 3;
 }
 
-#botoes>div {
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: Consolas, Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    color: transparent;
-    background-color: rgba(233, 233, 233, 0.3);
-    padding: 10px;
-    margin: 5px;
+#configuracoes {
+    overflow-y: scroll;
+    padding: 20px;
+    font-family: Consolas;
+    font-size: 15px;
+    z-index: 2;
+    height: 100%;
+    position: fixed;
+    color: white;
+    background-color: rgba(0, 12, 29, 0.671);
     backdrop-filter: blur(10px);
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+#configuracoes>h2 {
+    color: white;
+}
+
+#configuracoes::-webkit-scrollbar {
+    display: none;
+    /* Safari and Chrome */
+}
+
+.ativo {
+    animation: mostra 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    width: calc(50% - 40px);
+}
+
+.desativo {
+    animation: oculta 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    left: calc(-50% - 40px);
+}
+
+@keyframes mostra {
+    from {
+        left: -50%;
+        display: none;
+    }
+    to {
+        left: 0px;
+        display: block;
+    }
+}
+
+@keyframes oculta {
+    from {
+        left: 0%;
+        display: block;
+    }
+    to {
+        left: -50%;
+        display: none;
+    }
+}
+
+.config-box {
+    width: 95%;
+    border-radius: 15px;
+    color: black;
+    background-color: white;
+    padding: 10px;
+    border: 0.5px black solid;
+}
+
+label {
+    padding-left: 0.5em;
+}
+
+.cor {
+    height: 30px;
+    width: 30px;
+    border-radius: 100%;
+    cursor: pointer;
+    outline: 0;
+    padding: 0;
+    border: 0 none;
+    border-radius: 100%;
+}
+
+.cor:focus {
+    box-shadow: 0 0 0 0;
+    border: 0 none;
+    outline: 0;
+}
+
+form>div>label:first-of-type {
+    flex: auto;
+    max-width: 50%;
+    min-width: 170px;
+    margin: auto 0;
+    text-align: right;
+}
+
+form>div>label {
+    margin: auto 0;
+}
+
+form>div {
+    display: flex;
+    vertical-align: middle;
+}
+
+select {
+    background-color: rgb(255, 255, 255);
+    padding: 5px 5px 0px;
+    margin: 2px 0;
+    width: 130px;
+    border: none;
+    outline: none;
+}
+
+select:focus {
+    outline: none;
+}
+
+.ui-select {
+    width: 100%
+}
+
+
+/* This is to remove the arrow of select element in IE */
+
+select::-ms-expand {
+    display: none;
+}
+
+select {
+    font-family: Consolas;
+    font-size: 15px;
+    -webkit-appearance: none;
+    appearance: none;
+    border-bottom: 2px solid rgb(0, 59, 59);
+}
+
+@-moz-document url-prefix() {
+    .ui-select {
+        border: 1px solid #CCC;
+        border-radius: 4px;
+        box-sizing: border-box;
+        position: relative;
+        overflow: hidden;
+    }
+    .ui-select select {
+        width: 110%;
+        background-position: right 30px center !important;
+        border: none !important;
+    }
+}
+
+.inputcor {
+    font-family: Consolas;
+    font-size: 15px;
+    outline: none;
+    border: none;
+    margin: auto 5px;
+    width: 60px;
+}
+
+button {
+    font-family: var(--font1);
+    outline: none;
+    border: 0.5px solid rgb(185, 202, 201);
+    border-radius: 5px;
+    width: 120px;
+    position: relative;
+    left: calc(50% - 60px);
+    background-color: rgb(255, 255, 255);
+    padding: 5px;
+    color: rgb(20, 20, 20);
+    cursor: pointer;
+    font-size: 16px;
+    vertical-align: middle;
+    appearance: none;
+    margin: auto;
+    transition-property: border box-shadow;
+    transition-duration: 0.5s;
+    transition-delay: 0s;
+    margin-top: 40px;
+    margin-bottom: 500px;
+}
+
+button:hover {
+    border: 0.5px solid rgb(0, 67, 167);
+    -webkit-box-shadow: 0px 0px 21px 2px rgba(160, 160, 160, 0.52);
+    box-shadow: 0px 0px 14px 1px rgba(43, 65, 99, 0.219);
 }

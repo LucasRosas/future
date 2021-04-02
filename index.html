@@ -8,6 +8,7 @@
     <title>Painel de Criação - Future</title>
     <script src="js/FileSaver.js"></script>
     <link rel="stylesheet" href="css/estilos.css">
+    <script src="js/antesedepois.js"></script>
 
 
 
@@ -22,21 +23,134 @@
 </head>
 
 <body>
+    <div id="configuracoes" class="desativo">
+        <h2>Estilos</h2>
+        <h2>Personalizado</h2>
+        <h3>Fontes</h3>
+        <div class="config-box">
+            <form>
+                <div>
+                    <label for="fonte1">Fonte Principal:</label>
+                    <select id="fonte1" name="fonte" class="opcoes" onchange="mudaestilo('font1',this.value)">
+                        <option value="Verdana">Verdana</option>
+                        <option value="Arial">Arial</option>
+                        <option value="Cambria">Cambria</option>
+                        <option value="Georgia">Georgia</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="fonte2">Fonte Secundária:</label>
+                    <select id="fonte2" name="fonte" class="opcoes">
+                        <option value="Verdana">Verdana</option>
+                        <option value="Arial">Arial</option>
+                        <option value="Cambria">Cambria</option>
+                        <option value="Georgia">Georgia</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="fonte3">Fonte Math:</label>
+                    <select id="fonte3" name="fonte" class="opcoes">
+                        <option value="Verdana">Verdana</option>
+                        <option value="Arial">Arial</option>
+                        <option value="Cambria">Cambria</option>
+                        <option value="Georgia">Georgia</option>
+                    </select>
+                </div>
+            </form>
+
+        </div>
+
+
+        <h3>Cores</h3>
+        <div class="config-box">
+            <form>
+                <div>
+
+                    <label for="cor0">Texto:</label>
+                    <input class="opcoes cor" type="color" value="#000000" id="cor0" onchange="cornome(this)"> <input id="or0" onchange="corvalor(this)" value="#000000" class="inputcor">
+                </div>
+                <div><label for="cor1">Título Principal:</label>
+                    <input class="opcoes cor" type="color" value="black" id="cor1" onchange="cornome(this)"> <label for="cor1">#000000</label>
+
+                </div>
+                <div><label for="cor2">Título Secundário:</label>
+                    <input class="opcoes cor" type="color" value="black" id="cor2" onchange="cornome(this)"> <label for="cor2">#000000</label>
+
+                </div>
+                <div><label for="cor3">Título Terciário:</label>
+                    <input class="opcoes cor" type="color" value="black" id="cor3" onchange="cornome(this)"> <label for="cor3">#000000</label>
+
+                </div>
+                <div><label for="cor4">Texto Tabela:</label>
+                    <input class="opcoes cor" type="color" value="black" id="cor4" onchange="cornome(this)"> <label for="cor4">#000000</label>
+
+                </div>
+                <div><label for="cor5">Fundo Tabela 1:</label>
+                    <input class="opcoes cor" type="color" value="black" id="cor5" onchange="cornome(this)"> <label for="cor5">#000000</label>
+
+                </div>
+                <div><label for="cor6">Fundo Tabela 2:</label>
+                    <input class="opcoes cor" type="color" value="black" id="cor6" onchange="cornome(this)"> <label for="cor6">#000000</label>
+
+                </div>
+                <div><label for="cor7">Texto dos botões:</label>
+                    <input class="opcoes cor" type="color" value="black" id="cor7" onchange="cornome(this)"> <label for="cor7">#000000</label>
+
+                </div>
+                <div><label for="cor8">Fundo dos botões:</label>
+                    <input class="opcoes cor" type="color" value="black" id="cor8" onchange="cornome(this)"> <label for="cor8">#000000</label>
+
+                </div>
+                <div><label for="cor9">Texto Completar:</label>
+                    <input class="opcoes cor" type="color" value="black" id="cor9" onchange="cornome(this)"> <label for="cor9">#000000</label>
+
+                </div>
+                <div><label for="cor10">Fundo Completar:</label>
+                    <input class="opcoes cor" type="color" value="black" id="cor10" onchange="cornome(this)"> <label for="cor10">#000000</label>
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+            </form>
+        </div>
+
+        <h3>Distâncias e tamanhos</h3>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+
+
+
+
+    </div>
+
     <div id="container">
+
         <div id="blocodenotas" contentEditable="true" onkeyup="roda()">Escreva aqui seu texto</div>
         <div id="preview"> </div>
     </div>
     <div id="botoesf">
-        <div onclick="ajustar()">ajustar texto</div>
-        <div onclick="savetxt()">salvar txt fonte</div>
-        <div onclick="savehtml()">salvar html</div>
+        <div onclick="config(this)">configurações</div>
+        <div onclick="ajustar()" class="botoesf">ajustar texto</div>
+        <div onclick="savetxt()" class="botoesf">salvar txt fonte</div>
+        <div onclick="savehtml()" class="botoesf">salvar html</div>
     </div>
-    <div id="botoes">
-        <div onclick="ajustar()">ajustar texto</div>
-        <div onclick="savetxt()">salvar txt fonte</div>
-        <div onclick="savehtml()">salvar html</div>
 
-    </div>
     <script src="js/javas.js"></script>
     <script src="js/future.js"></script>
 
