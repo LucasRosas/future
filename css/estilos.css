@@ -3,6 +3,7 @@
 :root {
     --font1: Verdana;
     --cor0: #000000;
+    --dist: 0px;
 }
 
 html {
@@ -73,7 +74,7 @@ body {
 p {
     text-indent: 1.5em;
     margin: 5px 0px;
-    line-height: 22px;
+    line-height: 25px;
     font-size: 15px;
     text-align: justify;
     max-height: 100%;
@@ -87,7 +88,7 @@ section {
 
 @keyframes revela {
     from {
-        margin-top: 100px
+        margin-top: var(--dist)
     }
     to {
         margin-top: 0
@@ -117,6 +118,7 @@ img:not(.imgmiddle) {
     margin-right: auto;
     max-height: 200px;
     max-width: 90%;
+    border-radius: 10px;
 }
 
 a {
