@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel de Criação - Future</title>
+
     <script src="js/FileSaver.js"></script>
     <link rel="stylesheet" href="css/estilos.css">
     <script src="js/antesedepois.js"></script>
-
 
 
     <link rel="stylesheet" href="css/katex.min.css" crossorigin="anonymous">
@@ -22,7 +22,7 @@
 
 </head>
 
-<body>
+<body onload="document.documentElement.style.setProperty('--dist','0px')">
     <div id="configuracoes" class="desativo">
         <h2>Estilos</h2>
         <h2>Personalizado</h2>
@@ -67,57 +67,52 @@
                 <div>
 
                     <label for="cor0">Texto:</label>
-                    <input class="opcoes cor" type="color" value="#000000" id="cor0" onchange="cornome(this)"> <input id="or0" onchange="corvalor(this)" value="#000000" class="inputcor">
+                    <input class="opcoes cor" type="color" value="#000000" id="cor0" onchange="cornome(this)"> <input maxlength="7" id="or0" onchange="corvalor(this)" value="#000000" class="inputcor">
                 </div>
                 <div><label for="cor1">Título Principal:</label>
-                    <input class="opcoes cor" type="color" value="black" id="cor1" onchange="cornome(this)"> <label for="cor1">#000000</label>
+                    <input class="opcoes cor" type="color" value="#000000" id="cor1" onchange="cornome(this)"> <input maxlength="7" id="or1" onchange="corvalor(this)" value="#000000" class="inputcor">
 
                 </div>
                 <div><label for="cor2">Título Secundário:</label>
-                    <input class="opcoes cor" type="color" value="black" id="cor2" onchange="cornome(this)"> <label for="cor2">#000000</label>
+                    <input class="opcoes cor" type="color" value="#0a2a58" id="cor2" onchange="cornome(this)"> <input maxlength="7" id="or2" onchange="corvalor(this)" value="#0a2a58" class="inputcor">
 
                 </div>
                 <div><label for="cor3">Título Terciário:</label>
-                    <input class="opcoes cor" type="color" value="black" id="cor3" onchange="cornome(this)"> <label for="cor3">#000000</label>
+                    <input class="opcoes cor" type="color" value="#0070bb" id="cor3" onchange="cornome(this)"> <input maxlength="7" id="or3" onchange="corvalor(this)" value="#0070bb" class="inputcor">
 
                 </div>
                 <div><label for="cor4">Texto Tabela:</label>
-                    <input class="opcoes cor" type="color" value="black" id="cor4" onchange="cornome(this)"> <label for="cor4">#000000</label>
+                    <input class="opcoes cor" type="color" value="#000000" id="cor4" onchange="cornome(this)"> <input maxlength="7" id="or4" onchange="corvalor(this)" value="#000000" class="inputcor">
 
                 </div>
                 <div><label for="cor5">Fundo Tabela 1:</label>
-                    <input class="opcoes cor" type="color" value="black" id="cor5" onchange="cornome(this)"> <label for="cor5">#000000</label>
+                    <input class="opcoes cor" type="color" value="#000000" id="cor5" onchange="cornome(this)"> <input maxlength="7" id="or5" onchange="corvalor(this)" value="#000000" class="inputcor">
 
                 </div>
                 <div><label for="cor6">Fundo Tabela 2:</label>
-                    <input class="opcoes cor" type="color" value="black" id="cor6" onchange="cornome(this)"> <label for="cor6">#000000</label>
+                    <input class="opcoes cor" type="color" value="#000000" id="cor6" onchange="cornome(this)"> <input maxlength="7" id="or6" onchange="corvalor(this)" value="#000000" class="inputcor">
 
                 </div>
                 <div><label for="cor7">Texto dos botões:</label>
-                    <input class="opcoes cor" type="color" value="black" id="cor7" onchange="cornome(this)"> <label for="cor7">#000000</label>
+                    <input class="opcoes cor" type="color" value="#000000" id="cor7" onchange="cornome(this)"> <input maxlength="7" id="or7" onchange="corvalor(this)" value="#  000000" class="inputcor">
 
                 </div>
                 <div><label for="cor8">Fundo dos botões:</label>
-                    <input class="opcoes cor" type="color" value="black" id="cor8" onchange="cornome(this)"> <label for="cor8">#000000</label>
+                    <input class="opcoes cor" type="color" value="#000000" id="cor8" onchange="cornome(this)"> <input maxlength="7" id="or8" onchange="corvalor(this)" value="#000000" class="inputcor">
 
                 </div>
                 <div><label for="cor9">Texto Completar:</label>
-                    <input class="opcoes cor" type="color" value="black" id="cor9" onchange="cornome(this)"> <label for="cor9">#000000</label>
+                    <input class="opcoes cor" type="color" value="#000000" id="cor9" onchange="cornome(this)"> <input maxlength="7" id="or9" onchange="corvalor(this)" value="#000000" class="inputcor">
 
                 </div>
-                <div><label for="cor10">Fundo Completar:</label>
-                    <input class="opcoes cor" type="color" value="black" id="cor10" onchange="cornome(this)"> <label for="cor10">#000000</label>
+                <div><label for="cor10">Resposta Certa:</label>
+                    <input class="opcoes cor" type="color" value="#bcd53f" id="cor10" onchange="cornome(this)"> <input maxlength="7" id="or10" onchange="corvalor(this)" value="#bcd53f" class="inputcor">
 
                 </div>
+                <div><label for="cor11">Resposta Errada:</label>
+                    <input class="opcoes cor" type="color" value="#D69592" id="cor11" onchange="cornome(this)"> <input maxlength="7" id="or11" onchange="corvalor(this)" value="#D69592" class="inputcor">
 
-
-
-
-
-
-
-
-
+                </div>
 
             </form>
         </div>

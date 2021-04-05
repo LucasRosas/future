@@ -1,24 +1,54 @@
 var entrada
 var texto = 'memoria'
-var prefixo = `<section class='completo'>`
+var prefixo = `<div id='btsumarioa' onclick='abresumario()'></div><div id="sumario"></div><section>`
 var posfixo = '</section>'
 var etapa = 'etapa'
-var efeitos = true
+var preview = document.getElementById('preview')
+var blocodenotas = document.getElementById('blocodenotas')
+var sumario = ''
+
+function indice() {
+    sumario = ''
+    elems = preview.getElementsByTagName('*')
+    for (i = 0; i < elems.length; i++) {
+        if (elems[i].tagName == 'H1' || elems[i].tagName == 'H2' || elems[i].tagName == 'H3') {
+            sumario = sumario + '<div class="item"><div><div class="bolinha"></div></div>' + elems[i].outerHTML + '</div>'
+        }
+    }
+    document.getElementById('sumario').innerHTML = `<div id='btsumario' onclick='fecha()'></div><div id='linha'></div>` + sumario
+
+}
+
+function fecha() {
+    mudaestilo('ml', '-1500px')
+    mudaestilo('abr', '10px')
+
+}
+
+function abresumario() {
+    mudaestilo('ml', '-250px')
+    mudaestilo('abr', '-1000px')
+
+}
 
 
 function efeito(x) {
-    if (efeitos) {
-        efeitos = false
-        x.textContent = 'desativar efeitos'
-        localStorage.setItem('etapa', 0)
-        mudaestilo('dist', '100px')
+    if (document.documentElement.style.getPropertyValue('--dist') == "0px") {
+        document.documentElement.style.setProperty('--dist', '100px')
+        localStorage.setItem('etapa', '0')
         roda()
+        x.textContent = 'desativar efeitos'
+        blocodenotas.style.display = 'none'
+        document.getElementsByClassName('botoesf')[0].style.display = 'none'
+
     } else {
-        efeitos = true;
+        document.documentElement.style.setProperty('--dist', '0px')
         x.textContent = 'ativar efeitos'
-        mudaestilo('dist', '0px')
+        blocodenotas.style.display = 'block'
+        document.getElementsByClassName('botoesf')[0].style.display = 'block'
+
+
     }
-    console.log(efeitos);
 }
 
 function cornome(x) {
@@ -29,10 +59,11 @@ function cornome(x) {
 
 function corvalor(x) {
     document.getElementById('c' + x.id).value = x.value
+    mudaestilo('c' + x.id, x.value)
 }
 
 function savetxt() {
-    var blob = new Blob([document.getElementById('blocodenotas').innerText], { type: "text/plain;charset=utf-8" });
+    var blob = new Blob([blocodenotas.innerText], { type: "text/plain;charset=utf-8" });
     saveAs(blob, "fonte.txt");
 }
 
@@ -53,17 +84,18 @@ function savehtml() {
 
 function ajustar() {
     roda()
-    x = document.getElementById('blocodenotas')
-    x.innerHTML = '<p>' + x.innerText.replaceAll('<br>', '</p><p>').replaceAll('\n', '</p><p>').replaceAll('div>', 'p>')
+    blocodenotas.innerHTML = '<p>' + blocodenotas.innerText.replaceAll('<br>', '</p><p>').replaceAll('\n', '</p><p>').replaceAll('div>', 'p>')
     marcaiframe()
     roda()
 }
 
 function config(y) {
     x = document.getElementById('configuracoes')
+    b = blocodenotas
     a = document.getElementsByClassName('botoesf')
 
     if (y.innerText === 'configurações') {
+        b.style.width = '50%'
         y.innerText = 'Salvar e fechar'
         x.classList.remove('desativo')
         x.classList.add('ativo')
@@ -73,8 +105,6 @@ function config(y) {
         y.innerText = 'configurações'
         x.classList.add('desativo')
         x.classList.remove('ativo')
-
-
         y.style.backgroundColor = 'rgba(58, 58, 58, 0.3)'
 
     }
@@ -93,32 +123,37 @@ function corc(x) {
 
 
 function marcaiframe() {
-    x = document.getElementById('blocodenotas')
+    x = blocodenotas
     x.innerHTML = x.innerHTML.replaceAll('<p>iframe_', '<p class="iframe">iframe_')
     document.getElementsByClassName('iframe')[0].innerText = 'iframe_{' + code[0] + '}'
 
 }
 
 function continua(x) {
-    confere(x)
-    if (x.parentElement.classList.contains('completo')) {
-        x.parentElement.nextElementSibling.style.display = 'block'
-        x.style.display = 'none'
+    y = x.parentElement
+    while (y.tagName != 'SECTION') {
+        y = y.parentElement
+    }
+    confere(y)
+    if (y.classList.contains('completo')) {
+        y.nextElementSibling.style.display = 'block'
+        y.getElementsByClassName('botaocontinua')[0].style.display = 'none'
+
         k = Array.from(document.getElementsByClassName('botaocontinua')).indexOf(x) + 1
-        console.log(k);
         if (localStorage.getItem('etapa') < k) {
             localStorage.setItem('etapa', k)
         }
-    } else {
-        alert('Complete todas as Quests para continuar')
     }
+    marca()
 }
 
-function confere(x) {
-    ncomplete = x.parentElement.getElementsByClassName('complete').length
-    ncerto = x.parentElement.getElementsByClassName('certo').length
+function confere(y) {
+    ncomplete = y.getElementsByClassName('complete').length + y.getElementsByClassName('alternativas').length
+    console.log(ncomplete);
+    ncerto = y.getElementsByClassName('certo').length
+    console.log(ncerto);
     if (ncomplete == ncerto) {
-        x.parentElement.classList.add('completo')
+        y.classList.add('completo')
     }
 }
 
@@ -161,7 +196,7 @@ function complete(x) {
             }
         }
 
-        a[i] = `<input class='complete' type="text" name ="complete" size="${largura}" id="complete${i}" value="???" onclick = "this.value=''" onchange = "verifica(this)"> <span class='spanx'">:</span>` + a[i].replace(a[i].split(')*')[0] + ')*', '')
+        a[i] = `<input class='complete' type="text" name ="complete" size="${largura}" id="complete${i}" value="???" onclick = "zera(this)" onchange = "verifica(this)"> <span class='spanx'">:</span>` + a[i].replace(a[i].split(')*')[0] + ')*', '')
         resp.push(certas)
     }
 
@@ -169,6 +204,30 @@ function complete(x) {
 
     return x
 }
+
+function zera(x) {
+    x.value = ''
+    x.style.backgroundColor = 'rgb(2, 187, 2)'
+}
+
+function marcou(x) {
+    y = x.parentElement
+    if (y.classList.contains('alternativas')) {
+
+        if (x.classList.contains('certa')) {
+            x.classList.add('acertou')
+
+        } else {
+            x.classList.add('errou')
+        }
+        if (y.getElementsByClassName('certa').length == y.getElementsByClassName('acertou').length) {
+            y.classList.add('certo')
+        }
+    }
+    continua(x)
+
+}
+
 
 function verifica(x) {
     resposta = x.value;
@@ -178,9 +237,11 @@ function verifica(x) {
         x.nextElementSibling.style.display = 'inline';
         x.nextElementSibling.textContent = resposta;
         x.nextElementSibling.classList.add('certo')
+        continua(x)
     } else {
         x.style.backgroundColor = 'darkred';
     }
+
 }
 
 function tag(x, sinal, inicio, fim) {
@@ -237,8 +298,8 @@ function tabela(x) {
 }
 
 if (localStorage.getItem(texto).length > 40) {
-    document.getElementById('blocodenotas').innerHTML = localStorage.getItem(texto)
-} else { document.getElementById('blocodenotas').innerHTML = '<p>que isso?</p>' }
+    blocodenotas.innerHTML = localStorage.getItem(texto)
+} else { blocodenotas.innerHTML = '<p>que isso?</p>' }
 
 roda()
 
@@ -249,7 +310,6 @@ function mudaestilo(a, b) {
 }
 
 function abre(n) {
-    console.log(n);
     for (i = 0; i <= n; i++) {
         document.getElementsByClassName('botaocontinua')[i].style.display = 'none'
         document.getElementsByTagName('section')[i].style.display = 'block'
@@ -259,9 +319,9 @@ function abre(n) {
 
 
 function roda() {
-    entrada = document.getElementById('blocodenotas').innerHTML.replaceAll('<span style="text-indent: 1.5em;">', '').replaceAll('</span>', '')
+    entrada = blocodenotas.innerHTML.replaceAll('<span style="text-indent: 1.5em;">', '').replaceAll('</span>', '').replaceAll('</br>', '')
     localStorage.setItem(texto, entrada)
-    entrada = entrada.replaceAll('div>', 'p>').replaceAll('<p>iframe_', '<p class="iframe">iframe_').replaceAll('<p>_</p>', `<button class='botaocontinua' onclick="continua(this)">Continuar</button></section><section style="display:none">`)
+    entrada = entrada.replaceAll('div>', 'p>').replaceAll('<p>iframe_', '<p class="iframe">iframe_').replaceAll('<p>_</p>', `<button class='botaocontinua' onclick="continua(this)">Continuar</button></section><section style="display:none">`).replaceAll('\/\\', '</br>')
     let resp = []
     entrada = complete(entrada)
     let code = []
@@ -270,13 +330,22 @@ function roda() {
     entrada = tag(entrada, '###', '<h3>', '</h3>')
     entrada = tag(entrada, '##', '<h2>', '</h2>')
     entrada = tag(entrada, '#', '<h1>', '</h1>')
+    entrada = tag(entrada, 'img', `<img class='esquerda' src='`, `'>`)
+    entrada = tag(entrada, '   img', `<img src='`, `'>`)
+    entrada = tag(entrada, '      img', `<img class='direita' src='`, `'>`)
     entrada = tag(entrada, '      ', `<p style="text-align: right; text-indent:0px">`, '</p>')
     entrada = tag(entrada, '   ', `<p style="text-align: center; text-indent:0px">`, '</p>')
     entrada = txt(entrada, '<p>-#</p>', '<ol>', '</ol>')
-    entrada = tag(entrada, '-', '<li>', '</li>')
+    entrada = txt(entrada, '<p>-A</p>', '<ol type=A>', '</ol>')
+    entrada = txt(entrada, '<p>-I</p>', '<ol type=I>', '</ol>')
+    entrada = txt(entrada, '<p>-a</p>', '<ol type="a">', '</ol>')
+    entrada = txt(entrada, '<p>-m</p>', `<div class='alternativas'>`, `</div>`)
+    entrada = tag(entrada, '--', `<li class='certa' onclick='marcou(this)'>`, '</li>')
 
-    entrada = tag(entrada, 'img',
-        '<img src="', '">')
+    entrada = tag(entrada, '-', `<li onclick='marcou(this)'>`, '</li>')
+
+
+
     entrada = txt(entrada, '***', '<u>', '</u>')
     entrada = txt(entrada, '**', '<i>', '</i>')
     entrada = txt(entrada, '*', '<strong>', '</strong>')
@@ -285,15 +354,22 @@ function roda() {
     entrada = imagem(entrada)
 
 
-    document.getElementById('preview').innerHTML = prefixo + entrada + posfixo
+    preview.innerHTML = prefixo + entrada + posfixo
     chamaiframe()
     abre(localStorage.getItem('etapa'))
-    renderMathInElement(document.getElementById('preview'), {
+    indice()
+    mudaestilo('hlinha', document.getElementsByClassName('item')[document.getElementsByClassName('item').length - 1].offsetTop + 'px')
+    document.getElementsByClassName('bolinha')[0].classList.add('done')
+    renderMathInElement(preview, {
         delimiters: [{
             left: "$$",
             right: "$$",
             display: true
         }, { left: "\\[", right: "\\]", display: true }, { left: "$", right: "$", display: false }, { left: "\\(", right: "\\)", display: false }]
     })
+
+}
+
+function marca() {
 
 }
