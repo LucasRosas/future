@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future 2.0</title>
+    <link rel="shortcut icon" href="/iconfuture.fca42682.png" type="image/x-icon">
+
+    <script src="/skils.91659e4a.js"></script>
+    <script src="/chroma.min.96f67760.js"></script>
+
+    <link rel="stylesheet" href="/codemirror.35679b7a.css">
+    <script src="/codemirror.63a0f622.js"></script>
+    <script src="/markdown.fde9e0ed.js"></script>
+
+    <link rel="stylesheet" href="/balloon.min.739ba60c.css">
+
+    <link rel="stylesheet" href="/estilos.6561dcf6.css">
+
+
+    <script src="https://kit.fontawesome.com/029cf7ac2a.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/font-awesome.min.87167abf.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Asap:wght@400;500;700&family=Lexend+Deca&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Poppins:wght@400;600;900&family=Reem+Kufi&family=Roboto:wght@100;500;900&display=swap" rel="stylesheet">
+
+
+    <script src="/codecogs.21b5508a.js"></script>
+
+    <link rel="stylesheet" href="/katex.min.d0d35925.css" crossorigin="anonymous">
+    <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.js" integrity="sha384-FaFLTlohFghEIZkw6VGwmf9ISTubWAVYW8tG8+w2LAIftJEULZABrF9PPFv+tVkH" crossorigin="anonymous"></script>
+    <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/contrib/auto-render.min.js" integrity="sha384-bHBqxz8fokvgoJ/sc17HODNxa42TlaEhB+w8ZJXTc2nZf1VgEaFZeZvT4Mznfz0v" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+    <script src="/bodymovin.395776b4.js"></script>
+
+
+<script src="/codemirror.35679b7a.js"></script><script src="/balloon.min.739ba60c.js"></script><script src="/estilos.6561dcf6.js"></script><script src="/font-awesome.min.87167abf.js"></script><script src="/katex.min.d0d35925.js"></script></head>
+
+<body onload="inicia()" id="my-scrollbar">
+
+    <div id="ferramentas">
+        <div class="skil" aria-label="Configurar cores, fontes e imagem" data-balloon-pos="down-left" title="Configurações" onclick="config()"><i class="fas fa-palette"></i></div>
+        <div class="separador"></div>
+        <div class="skil" aria-label="*negrito*" data-balloon-pos="down-left" onclick="bold()" title="Negrito">
+            <strong>B</strong>
+        </div>
+        <div class="skil" aria-label="**italico**" data-balloon-pos="down" title="Itálico"><i>I</i></div>
+        <div class="skil" aria-label="***sublinhado***" data-balloon-pos="down" title="Sulinhado"><u>S</u></div>
+        <div class="separador"></div>
+        <div class="skil" aria-label="#Título Principal" data-balloon-pos="down" onclick="h1()" title="Título Principal"><strong>H1</strong></div>
+        <div class="skil" aria-label="##Título Secundário" data-balloon-pos="down" title="Título Secundário"><strong>H2</strong></div>
+        <div class="skil" aria-label="###Título Terciário" data-balloon-pos="down" title="Título Terciário">H3</div>
+        <div class="separador"></div>
+        <div class="skil" title="Justificar"><i class="fas fa-align-justify"></i></div>
+        <div class="skil" title="Centralizar"><i class="fas fa-align-center"></i>
+        </div>
+        <div class="skil" title="Alinhar à direita"><i class="fas fa-align-right"></i>
+        </div>
+        <div class="separador"></div>
+        <div class="skil" title="Lista não ordenada"><i class="fas fa-list"></i></div>
+        <div class="skil" title="Lista Ordenada"><i class="fas fa-list-ol"></i></div>
+        <div class="separador"></div>
+        <div class="skil" title="Adicionar link"><i class="fas fa-link"></i></div>
+        <div class="skil" title="Adicionar imagem"><i class="fas fa-image"></i></div>
+        <div class="skil" title="Adicionar tabela" onclick="javascript: OpenLatexEditor('pato','html','pt-BR',true)"><i class="fas fa-table"></i>
+        </div>
+        <div class="separador"></div>
+        <div class="skil" data-balloon-length="medium" aria-label="Múltipla Escolha -m -A" data-balloon-pos="down"><strong>A)</strong></div>
+        <div class="skil" data-balloon-length="medium" aria-label="Completar espaço [[Certo|certo]]" data-balloon-pos="down"><strong>(?)</strong></div>
+        <div class="skil" data-balloon-length="medium" aria-label="Arraste e Solta -d [(resposta)]" data-balloon-pos="down"><strong>(&#160;)</strong></div>
+        <div class="skil" data-balloon-length="medium" aria-label="Cascata Múltipla Escolha [[[certo]|errado]]" data-balloon-pos="down"><strong>(A)</strong></div>
+        <div class="separador"></div>
+        <div class="skil" title="Baixar txt"><i class="fas fa-download"></i></div>
+        <div class="skil" title="Abrir Livro"><i class="fas fa-share-square"></i></div>
+        <div class="skil" title="compartilhar Livro"><i class="fas fa-share-alt"></i></div>
+
+
+
+
+
+
+
+    </div>
+    <div id="configuracoes" class="desativo">
+        <h2>Capa</h2>
+        <label for="urlcover"><i class="fas fa-image"></i></label>
+        <input id="urlcover" onchange="addImage( `url(${this.value})`)" value="" class="inputimg">
+        <h2>Estilos</h2>
+        <h2>Personalizado</h2>
+        <h3>Fontes</h3>
+        <div class="config-box">
+            <form>
+                <div>
+                    <label for="fonte1">Fonte Principal:</label>
+                    <select id="fonte1" name="fonte" class="opcoes" onchange="mudaestilo('font1',this.value)">
+
+                        <option value="Arial" style="font-family: Arial;">Arial</option>
+                        <option value="Asap" style="font-family: Asap;">Asap</option>
+                        <option value="Cambria" style="font-family: Cambria;">Cambria</option>
+                        <option value="Georgia" style="font-family: Georgia;">Georgia</option>
+                        <option value="Lexend Deca" style="font-family: Lexend Deca;">Lexend Deca</option>
+                        <option value="Libre Baskerville" style="font-family: Libre Baskerville;">Libre Baskerville
+                        </option>
+                        <option value="Poppins" style="font-family: Poppins;">Poppins</option>
+                        <option value="Reem Kufi" style="font-family: Reem Kufi;">Reem Kufi</option>
+                        <option value="Roboto" style="font-family: Roboto;">Roboto</option>
+                        <option value="Verdana" style="font-family: Verdana;">Verdana</option>
+
+
+                    </select>
+                </div>
+                <div>
+                    <label for="fonte2">Fonte Secundária:</label>
+                    <select id="fonte2" name="fonte" class="opcoes" onchange="mudaestilo('font2',this.value)">
+                        <option value="Arial" style="font-family: Arial;">Arial</option>
+                        <option value="Asap" style="font-family: Asap;">Asap</option>
+                        <option value="Cambria" style="font-family: Cambria;">Cambria</option>
+                        <option value="Georgia" style="font-family: Georgia;">Georgia</option>
+                        <option value="Lexend Deca" style="font-family: Lexend Deca;">Lexend Deca</option>
+                        <option value="Libre Baskerville" style="font-family: Libre Baskerville;">Libre Baskerville
+                        </option>
+                        <option value="Poppins" style="font-family: Poppins;">Poppins</option>
+                        <option value="Reem Kufi" style="font-family: Reem Kufi;">Reem Kufi</option>
+                        <option value="Roboto" style="font-family: Roboto;">Roboto</option>
+                        <option value="Verdana" style="font-family: Verdana;">Verdana</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="fonte3">Fonte Math:</label>
+                    <select id="fonte3" name="fonte" class="opcoes" onchange="mudaestilo('font3',this.value)">
+                        <option value="Arial" style="font-family: Arial;">Arial</option>
+                        <option value="Asap" style="font-family: Asap;">Asap</option>
+                        <option value="Cambria" style="font-family: Cambria;">Cambria</option>
+                        <option value="Georgia" style="font-family: Georgia;">Georgia</option>
+                        <option value="Lexend Deca" style="font-family: Lexend Deca;">Lexend Deca</option>
+                        <option value="Libre Baskerville" style="font-family: Libre Baskerville;">Libre Baskerville
+                        </option>
+                        <option value="Poppins" style="font-family: Poppins;">Poppins</option>
+                        <option value="Reem Kufi" style="font-family: Reem Kufi;">Reem Kufi</option>
+                        <option value="Roboto" style="font-family: Roboto;">Roboto</option>
+                        <option value="Verdana" style="font-family: Verdana;">Verdana</option>
+                    </select>
+                </div>
+            </form>
+
+        </div>
+
+
+        <h3>Cores</h3>
+        <div class="config-box">
+            <form>
+                <div>
+
+                    <label for="cor0">Texto:</label>
+                    <input class="opcoes cor" type="color" value="#000000" id="cor0" onchange="cornome(this)"> <input maxlength="7" id="or0" onchange="corvalor(this)" value="#000000" class="inputcor">
+                </div>
+                <div><label for="cor1">Título Principal:</label>
+                    <input class="opcoes cor" type="color" value="#000000" id="cor1" onchange="cornome(this)"> <input maxlength="7" id="or1" onchange="corvalor(this)" value="#000000" class="inputcor">
+
+                </div>
+                <div><label for="cor2">Título Secundário:</label>
+                    <input class="opcoes cor" type="color" value="#0a2a58" id="cor2" onchange="cornome(this)"> <input maxlength="7" id="or2" onchange="corvalor(this)" value="#0a2a58" class="inputcor">
+
+                </div>
+                <div><label for="cor3">Título Terciário:</label>
+                    <input class="opcoes cor" type="color" value="#0070bb" id="cor3" onchange="cornome(this)"> <input maxlength="7" id="or3" onchange="corvalor(this)" value="#0070bb" class="inputcor">
+
+                </div>
+                <div><label for="cor4">Detalhes:</label>
+                    <input class="opcoes cor" type="color" value="#56bda4" id="cor4" onchange="cornome(this)"> <input maxlength="7" id="or4" onchange="corvalor(this)" value="#56bda4" class="inputcor">
+
+                </div>
+                <div><label for="cor5">Fundo Tabela 1:</label>
+                    <input class="opcoes cor" type="color" value="#5B9BD5" id="cor5" onchange="cornome(this)"> <input maxlength="7" id="or5" onchange="corvalor(this)" value="#5B9BD5" class="inputcor">
+
+                </div>
+                <div><label for="cor6">Fundo Tabela 2:</label>
+                    <input class="opcoes cor" type="color" value="#f2f2f2" id="cor6" onchange="cornome(this)"> <input maxlength="7" id="or6" onchange="corvalor(this)" value="#f2f2f2" class="inputcor">
+
+                </div>
+                <div><label for="cor7">Texto dos botões:</label>
+                    <input class="opcoes cor" type="color" value="#000000" id="cor7" onchange="cornome(this)"> <input maxlength="7" id="or7" onchange="corvalor(this)" value="#000000" class="inputcor">
+
+                </div>
+                <div><label for="cor8">Fundo dos botões:</label>
+                    <input class="opcoes cor" type="color" value="#ffffff" id="cor8" onchange="cornome(this)"> <input maxlength="7" id="or8" onchange="corvalor(this)" value="#ffffff" class="inputcor">
+
+                </div>
+                <div><label for="cor9">Texto Completar:</label>
+                    <input class="opcoes cor" type="color" value="#05978b" id="cor9" onchange="cornome(this)"> <input maxlength="7" id="or9" onchange="corvalor(this)" value="#05978b" class="inputcor">
+
+                </div>
+                <div><label for="cor10">Resposta Certa:</label>
+                    <input class="opcoes cor" type="color" value="#bcd53f" id="cor10" onchange="cornome(this)"> <input maxlength="7" id="or10" onchange="corvalor(this)" value="#bcd53f" class="inputcor">
+
+                </div>
+                <div><label for="cor11">Resposta Errada:</label>
+                    <input class="opcoes cor" type="color" value="#D69592" id="cor11" onchange="cornome(this)"> <input maxlength="7" id="or11" onchange="corvalor(this)" value="#D69592" class="inputcor">
+
+                </div>
+
+            </form>
+        </div>
+
+        <h3>Distâncias e tamanhos</h3>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+
+
+
+    </div>
+
+    <div id="container">
+        <div id="blocodenotas" onkeyup="roda()">
+        </div>
+        <div id="resize"></div>
+        <div id="preview" onclick="fechaconfig()" onscroll="scrola(this)"></div>
+    </div>
+    <script src="/future.0248fc3b.js"></script>
+    <script type="module">
+        import renderMathInElement from "https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.mjs"; renderMathInElement(document.getElementById('preview')); renderMathInElement(document.getElementById('preview'), { delimiters: [{ left: "$$", right:
+        "$$", display: true }, { left: "\\[", right: "\\]", display: true }, { left: "\\(", right: "\\)", display: false }] }); document.addEventListener("change", function () { renderMathInElement(document.getElementById('preview'), { strict: true });
+        });
+
+    </script>
+    <script>if (localStorage.getItem(localestilo) == null) {
+  localStorage.setItem(localestilo, '');
+}
+
+if (localStorage.getItem(texto) == null) {
+  localStorage.setItem(texto, '');
+}
+
+var myCodeMirror = CodeMirror(document.getElementById('blocodenotas'), {
+  value: localStorage.getItem(texto),
+  lineNumbers: true,
+  lineWrapping: true,
+  mode: "markdown"
+});
+var estilo = JSON.parse(localStorage.getItem(localestilo));</script>
+
+</body>
+
+</html>

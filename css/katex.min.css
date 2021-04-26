@@ -42,37 +42,9 @@
 
 @font-face {
     font-family: KaTeX_Main;
-    src: url(fonts/KaTeX_Main-Boldnormal;.woff2) format("woff2"), url(fonts/KaTeX_Main-Boldnormal;.woff) format("woff"), url(fonts/KaTeX_Main-Boldnormal;.ttf) format("truetype");
-    font-weight: 700;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: KaTeX_Main;
-    src: url(fonts/KaTeX_Main-normal;.woff2) format("woff2"), url(fonts/KaTeX_Main-normal;.woff) format("woff"), url(fonts/KaTeX_Main-normal;.ttf) format("truetype");
-    font-weight: 400;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: KaTeX_Main;
     src: url(fonts/KaTeX_Main-Regular.woff2) format("woff2"), url(fonts/KaTeX_Main-Regular.woff) format("woff"), url(fonts/KaTeX_Main-Regular.ttf) format("truetype");
     font-weight: 400;
     font-style: normal
-}
-
-@font-face {
-    font-family: KaTeX_Math;
-    src: url(fonts/KaTeX_Math-Boldnormal;.woff2) format("woff2"), url(fonts/KaTeX_Math-Boldnormal;.woff) format("woff"), url(fonts/KaTeX_Math-Boldnormal;.ttf) format("truetype");
-    font-weight: 700;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: KaTeX_Math;
-    src: url(fonts/KaTeX_Math-normal;.woff2) format("woff2"), url(fonts/KaTeX_Math-normal;.woff) format("woff"), url(fonts/KaTeX_Math-normal;.ttf) format("truetype");
-    font-weight: 400;
-    font-style: normal;
 }
 
 @font-face {
@@ -80,13 +52,6 @@
     src: url(fonts/KaTeX_SansSerif-Bold.woff2) format("woff2"), url(fonts/KaTeX_SansSerif-Bold.woff) format("woff"), url(fonts/KaTeX_SansSerif-Bold.ttf) format("truetype");
     font-weight: 700;
     font-style: normal
-}
-
-@font-face {
-    font-family: "KaTeX_SansSerif";
-    src: url(fonts/KaTeX_SansSerif-normal;.woff2) format("woff2"), url(fonts/KaTeX_SansSerif-normal;.woff) format("woff"), url(fonts/KaTeX_SansSerif-normal;.ttf) format("truetype");
-    font-weight: 400;
-    font-style: normal;
 }
 
 @font-face {
@@ -139,7 +104,7 @@
 }
 
 .katex {
-    font: normal 15px Verdana, KaTeX_Main, Times New Roman, serif;
+    font: normal 15px var(--font3), Verdana, KaTeX_Main, Times New Roman, serif;
     line-height: 20px;
     text-indent: 0;
     text-rendering: auto;
@@ -441,7 +406,7 @@
 
 .katex .fontsize-ensurer.reset-size1.size4,
 .katex .sizing.reset-size1.size4 {
-    font-size:20px
+    font-size: 20px
 }
 
 .katex .fontsize-ensurer.reset-size1.size5,

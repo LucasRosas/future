@@ -1,66 +1,533 @@
 var entrada
 var texto = 'memoria'
-var prefixo = `<div id='btsumarioa' onclick='abresumario()'></div><div id="sumario"></div><section>`
-var posfixo = '</section>'
+var localestilo = 'estilo'
+var prefixo = `<div id="bm"></div><div id='cover' onmousedown="coverposition1()" onmousemove="coverposition2()" onmouseup="boler = false"></div><div id="ss"><div id="sumario"></div><div id="sections"><section>`
+var posfixo = '</section></div></div>'
 var etapa = 'etapa'
 var preview = document.getElementById('preview')
 var blocodenotas = document.getElementById('blocodenotas')
 var sumario = ''
 
-function indice() {
-    sumario = ''
-    elems = preview.getElementsByTagName('*')
-    for (i = 0; i < elems.length; i++) {
-        if (elems[i].tagName == 'H1' || elems[i].tagName == 'H2' || elems[i].tagName == 'H3') {
-            sumario = sumario + '<div class="item"><div><div class="bolinha"></div></div>' + elems[i].outerHTML + '</div>'
+function inicia() {
+
+
+
+    for (k in estilo) {
+        mudaestilo(k, estilo[k])
+    }
+    setacores()
+    roda()
+    ajustacontraste()
+
+
+    addImage(estilo.imgcoverurl)
+    animacerto()
+
+}
+
+function animacerto() {
+    var animation = bodymovin.loadAnimation({
+        container: document.getElementById('bm'),
+        renderer: 'sgv',
+        loop: false,
+        autoplay: true,
+        path: 'data.json'
+
+    })
+}
+
+
+function roda() {
+    entrada = myCodeMirror.getValue('\n')
+    localStorage.setItem(texto, entrada)
+    entrada = imagem(link(tabela(complete(entrada))))
+    entrada = formatxt(entrada, '-d', '<div class="divdd">', '</div>')
+    entrada = formatxt(entrada, '-#', '<ol>', '</ol>')
+    entrada = formatxt(entrada, '-A', '<ol type=A>', '</ol>')
+    entrada = formatxt(entrada, '-I', '<ol type=I>', '</ol>')
+    entrada = formatxt(entrada, '-a', '<ol type="a">', '</ol>')
+    entrada = formatxt(entrada, '-m', `<div class='alternativas questao'>`, `</div>`)
+    entrada = formatxt(entrada, '***', '<u>', '</u>')
+    entrada = formatxt(entrada, '**', '<i>', '</i>')
+    entrada = formatxt(entrada, '*', '<strong>', '</strong>')
+
+    // agora entrada vira um vetor.
+    entrada = entrada.split('\n')
+    entrada = tags(entrada)
+
+    preview.innerHTML = prefixo + entrada + posfixo
+    dd()
+
+
+    renderMathInElement(preview, {
+        delimiters: [{
+            left: "$$",
+            right: "$$",
+            display: true
+        }, { left: "\\[", right: "\\]", display: true }, { left: "\\(", right: "\\)", display: false }]
+    })
+    indice()
+    botaocontinua(0)
+
+
+}
+
+function tags(x) {
+    for (i = 0; i < x.length; i++) {
+        inicio = x[i].substring(0, 1)
+        switch (inicio) {
+            case '_':
+                if (x[i] === '_') {
+                    x[i] = `</section><section style="display: none">`
+                }
+                break
+
+            case 'i':
+                if (x[i].substring(0, 3) === 'img') {
+
+                    x[i] = `<img class='esquerda' src='${x[i].split('img')[1].split(',')[0]}' height='${x[i].split('img')[1].split(',')[1]}'>`
+                } else {
+                    x[i] = `<p>${x[i]}</p>`
+                }
+                break
+            case ' ':
+                if (x[i].substring(0, 13) === '  img{oculta}') {
+                    x[i] = `
+                    <div class="divimgocult" onclick="mostra(this)">
+                    <div class="imgbotao">Mostrar</div>
+                    <img class="imgocult ocult" src="${x[i].split('  img{oculta}')[1].split(',')[0]}" height="${x[i].split('  img{oculta}')[1].split(',')[1]}"/></div>`
+                } else if (x[i].substring(0, 6) === '   img') {
+                    x[i] = `<img class='direita' src='${x[i].split('   img')[1]}'>`
+                } else if (x[i].substring(0, 5) === '  img') {
+                    x[i] = `<img class='centro' src='${x[i].split('  img')[1]}'>`
+                } else if (x[i].substring(0, 4) === ' img') {
+                    x[i] = `<img class='esquerda' src='${x[i].split('img')[1]}'>`
+                } else if (x[i].substring(0, 3) === '   ') {
+                    x[i] = `<p style="text-align: right; text-indent:0px">${x[i].split('   ')[1]}</p>`
+                } else if (x[i].substring(0, 2) === '  ') {
+                    x[i] = `<p style="text-align: center; text-indent:0px">${x[i].split('  ')[1]}</p>`
+                } else {
+                    x[i] = `<p>${x[i]}</p>`
+                }
+                break
+            case '<':
+                break
+            case '#':
+                if (x[i].substring(0, 3) === '###') {
+                    x[i] = `<h3>${x[i].split('###')[1]}</h3>`
+                } else if (x[i].substring(0, 2) === '##') {
+                    x[i] = `<h2>${x[i].split('##')[1]}</h2>`
+                } else {
+                    x[i] = `<h1>${x[i].split('#')[1]}</h1>`
+                }
+                break
+            case '-':
+                if (x[i].substring(0, 2) === '--') {
+                    x[i] = `<li class='certa' onclick='marcou(this)'>${x[i].split('--')[1]}</li>`
+                } else {
+                    x[i] = `<li onclick='marcou(this)'>${x[i].split('-')[1]}</li>`
+                }
+                break
+            default:
+                x[i] = `<p>${x[i]}</p>`
+
+
+        }
+
+    }
+    return x.join('')
+
+}
+
+function complete(x) {
+    a = x.split('[[')
+    resp = []
+    ii = 0
+
+    for (i = 1; i < a.length; i++) {
+        me = false
+        intervalo = false
+        k = -1
+        certas = a[i].split(']]')[0].split('|')
+        largura = 0
+        for (j = 0; j < certas.length; j++) {
+            if (certas[j].substring(0, 1) == '[') {
+                me = true
+                k = j
+            }
+            if (largura < certas[j].length) {
+                largura = certas[j].length
+            }
+            if (certas[j].includes('<<')) {
+                intervalo = true
+            }
+
+        }
+        if (me) {
+
+            certas[k] = certas[k].replace('[', '').replace(']', '')
+            a[i] = `<marc class='marc questao' id="marc${i}" onmouseover="posiciona(this)">???<span class='me'><span onclick='escolheu(this)'>${certas.join("</span><span onclick='escolheu(this)'>")}</span></marc><span class='spanx'">X</span>` + a[i].replace(a[i].split(']]')[0] + ']]', '')
+            resp.push([certas[k]])
+
+        } else if (intervalo) {
+            a[i] = `<input class='complete questao intervalo' type="text" name ="complete" size="${largura}" id="complete${i}" value="???" onclick = "zera(this)" onchange = "verifica(this)"> <span class='spanx'">:</span>` + a[i].replace(a[i].split(']]')[0] + ']]', '')
+            resp.push(certas)
+
+        } else {
+
+
+            a[i] = `<input class='complete questao' type="text" name ="complete" size="${largura}" id="complete${i}" value="???" onclick = "zera(this)" onchange = "verifica(this)"> <span class='spanx'">:</span>` + a[i].replace(a[i].split(']]')[0] + ']]', '')
+            resp.push(certas)
         }
     }
-    document.getElementById('sumario').innerHTML = `<div id='btsumario' onclick='fecha()'></div><div id='linha'></div>` + sumario
 
+    x = a.join('')
+
+    return x
 }
 
-function fecha() {
-    mudaestilo('ml', '-1500px')
-    mudaestilo('abr', '10px')
-
-}
-
-function abresumario() {
-    mudaestilo('ml', '-250px')
-    mudaestilo('abr', '-1000px')
-
-}
-
-
-function efeito(x) {
-    if (document.documentElement.style.getPropertyValue('--dist') == "0px") {
-        document.documentElement.style.setProperty('--dist', '100px')
-        localStorage.setItem('etapa', '0')
-        roda()
-        x.textContent = 'desativar efeitos'
-        blocodenotas.style.display = 'none'
-        document.getElementsByClassName('botoesf')[0].style.display = 'none'
-
+function formatxt(x, sinal, antes, depois) {
+    if (sinal.substring(0, 1) != '-') {
+        x = x.split(sinal)
+        for (i = 1; i < x.length; i++) {
+            if (i % 2 == 1) {
+                x[i] = antes + x[i] + depois
+            }
+        }
     } else {
-        document.documentElement.style.setProperty('--dist', '0px')
-        x.textContent = 'ativar efeitos'
-        blocodenotas.style.display = 'block'
-        document.getElementsByClassName('botoesf')[0].style.display = 'block'
+        x = x.split('\n' + sinal + '\n')
+
+        for (i = 1; i < x.length; i++) {
+            if (i % 2 == 1) {
+                x[i] = antes + '\n' + x[i] + depois + '\n'
+            }
+        }
+    }
+    return x.join('')
+
+}
+
+function imagem(x) {
+    x = x.split('img_')
+
+    for (i = 1; i < x.length; i++) {
+        url = x[i].split(',')[0]
+        altura = x[i].split(',')[1].split('_!')[0]
+        x[i] = `<img src="${url}" class="imgmiddle" dragable="false" style="height: ${altura}">${x[i].split('_!')[1]}`
+    }
+    return x.join('')
+}
+
+function link(x) {
+    x = x.split('~')
+    for (i = 1; i < x.length; i++) {
+        if (i % 2 == 1) {
+            if (x[i].split('[')[1] != null) {
+                a = x[i].substring(0, x[i].indexOf('['))
+                b = x[i].substring(x[i].indexOf('[') + 1)
+                c = b.substring(0, b.length - 1)
+                x[i] = `<def onmouseover="posiciona(this)">${a}<span class="def">${c}</span></def>`
+            } else {
+                x[i] = '<a href="' + x[i].replace(',', '" target="_blank">') + '</a>'
+            }
+        }
+    }
+    return x.join('')
+}
+
+function tabela(x) {
+    x = x.split('-t\n')
+    for (i = 0; i < x.length; i++) {
+
+        if (i % 2 == 1) {
+            table = x[i].split('\n')
+            tabela0 = []
+            for (j = 0; j < table.length - 1; j++) {
+                tabela0.push(table[j])
+                tabela0[j] = tabela0[j].split('|')
+            }
+            for (j = 1; j < tabela0.length; j++) {
+                for (k = 0; k < tabela0[j].length; k++) {
+                    if (tabela0[j][k] == '..') {
+                        g = 2
+                        f = 1
+                        while (j + f < tabela0.length && tabela0[j + f][k] == '..') {
+                            g = g + f
+                            tabela0[j + f][k] = '#$#$'
+                            f++
+                        }
+                        if (j == 1) {
+                            tabela0[j - 1][k] = '<th rowspan="' + g + '">' + tabela0[j - 1][k] + '</th>'
+                        } else {
+                            tabela0[j - 1][k] = '<td rowspan="' + g + '">' + tabela0[j - 1][k] + '</td>'
+                        }
+                    }
+
+                }
+            }
+
+            for (j = 0; j < tabela0.length; j++) {
+                for (k = 1; k < tabela0[j].length; k++) {
+                    if (tabela0[j][k] == '>>') {
+                        g = 2
+                        f = 1
+                        while (k + f < tabela0[j].length && tabela0[j][k + f] == '>>') {
+                            g = g + f
+                            tabela0[j][k + f] = '#$#$'
+                            f++
+                        }
+                        if (j == 0) {
+                            tabela0[j][k - 1] = '<th colspan="' + g + '">' + tabela0[j][k - 1] + '</th>'
+                        } else {
+                            tabela0[j][k - 1] = '<td colspan="' + g + '">' + tabela0[j][k - 1] + '</td>'
+                        }
+                    }
+
+                }
+            }
+            saida = '<table>'
+            td = 'th'
+            for (j = 0; j < tabela0.length; j++) {
+                saida = saida + '<tr>'
+                for (k = 0; k < tabela0[j].length; k++) {
+                    if (tabela0[j][k] == '-') {
+                        td = 'td'
+                        j++
+                    }
+                    if (tabela0[j][k] != '>>' && tabela0[j][k] != '..' && tabela0[j][k] != '#$#$') {
+                        if (tabela0[j][k].substring(0, 1) != '<') {
+                            saida = `${saida}<${td}>${tabela0[j][k]}</${td}>`
+                        } else {
+                            saida = saida + tabela0[j][k]
+                        }
+                    }
+                }
+                saida = saida + '</tr>'
+            }
+            x[i] = saida + '</table>\n'
+
+        }
+
+    }
 
 
+    x = x.join('')
+    return x
+}
+
+
+function marcou(x) {
+    y = x.parentElement
+    if (y.classList.contains('alternativas')) {
+
+        if (x.classList.contains('certa')) {
+            x.classList.add('acertou')
+            animacerto()
+
+        } else {
+            x.classList.add('errou')
+        }
+        if (y.getElementsByClassName('certa').length == y.getElementsByClassName('acertou').length) {
+            y.classList.add('certo')
+        }
+    }
+    continua(x)
+
+}
+
+function escolheu(x) {
+    avo = x.parentElement.parentElement
+
+    alternativaescolhida = x.innerText
+    pergunta = Number(avo.id.replace('marc', ''))
+    if (alternativaescolhida == resp[pergunta - 1][0]) {
+        avo.innerHTML = alternativaescolhida
+        avo.classList.add('certo')
+        avo.classList.remove('marc')
+        avo.nextElementSibling.classList.remove('xis')
+        animacerto()
+        continua(avo)
+    } else {
+        x.style.backgroundColor = 'darkred'
+        avo.nextElementSibling.classList.add('xis')
+
+    }
+
+}
+
+function continua(x) {
+    y = x.parentElement
+    while (y.tagName != 'SECTION') {
+        y = y.parentElement
+    }
+    confere(y)
+    if (y.classList.contains('completo')) {
+        y.nextElementSibling.style.display = 'block'
+        botaocontinua(Array.from(document.getElementsByTagName('section')).indexOf(y) + 1)
+
+        k = Array.from(document.getElementsByClassName('botaocontinua')).indexOf(x) + 1
+        if (localStorage.getItem('etapa') < k) {
+            localStorage.setItem('etapa', k)
+        }
     }
 }
 
-function cornome(x) {
-    x.nextElementSibling.value = x.value
-    x.nextElementSibling.style.color = x.value
-    mudaestilo(x.id, x.value)
+function confere(y) {
+    ncomplete = y.getElementsByClassName('questao').length
+    ncerto = y.getElementsByClassName('certo').length
+    if (ncomplete == ncerto) {
+        y.classList.add('completo')
+    }
 }
 
-function corvalor(x) {
-    document.getElementById('c' + x.id).value = x.value
-    mudaestilo('c' + x.id, x.value)
+function zera(x) {
+    x.value = ''
+    x.style.backgroundColor = 'var(--cor9)'
 }
+
+
+
+
+function verifica(x) {
+    resposta = x.value;
+    pergunta = Number(x.id.replace('complete', ''))
+    if (x.classList.contains('intervalo')) {
+        iI = String(resp[pergunta - 1]).split('<<')[0]
+        iF = String(resp[pergunta - 1]).split('<<')[1]
+
+        if (resposta > iI && resposta < iF) {
+            x.style.display = 'none';
+            x.nextElementSibling.style.display = 'inline';
+            x.nextElementSibling.textContent = resposta;
+            x.nextElementSibling.classList.add('certo')
+            animacerto()
+            continua(x)
+        } else { x.style.backgroundColor = 'darkred'; }
+    } else if (resp[pergunta - 1].includes(resposta)) {
+        x.style.display = 'none';
+        x.nextElementSibling.style.display = 'inline';
+        x.nextElementSibling.textContent = resposta;
+        x.nextElementSibling.classList.add('certo')
+        animacerto()
+        continua(x)
+    } else {
+        x.style.backgroundColor = 'darkred';
+    }
+
+}
+
+function mostra(x) {
+    x.getElementsByClassName('imgbotao')[0].style.display = 'none'
+    x.getElementsByClassName('ocult')[0].classList.remove('ocult')
+}
+
+
+function botaocontinua(n) {
+    sections = document.getElementsByTagName('SECTION')
+    btncontinua = document.createElement('button')
+    btncontinua.innerHTML = "Continuar"
+    btncontinua.classList.add('botaocontinua')
+    btncontinua.onclick = function(event) {
+        this.previousElementSibling.classList.add('completo')
+        this.nextElementSibling.style.display = 'block'
+        this.style.display = 'none'
+        botaocontinua(n + 1)
+    }
+    if (sections[n].nextElementSibling != null) {
+        if (sections[n].nextElementSibling.tagName != 'BUTTON' && n != sections.length && (sections[n].getElementsByClassName('questao')[0] == null || sections[n].getElementsByClassName('completo')[0] != null)) {
+            sections[n].parentNode.insertBefore(btncontinua, sections[n].nextElementSibling)
+        }
+    }
+}
+
+function dd() {
+    divdds = document.getElementsByClassName('divdd')
+    for (i = 0; i < divdds.length; i++) {
+        conteudo2 = []
+        conteudo = String(divdds[i].innerHTML).split('[(')
+        for (j = 1; j < conteudo.length; j++) {
+            conteudo2.push(`<sdrag draggable="true" aria-label="Arraste-me para uma caixa" data-balloon-pos="up" ondragstart="dragstart_handler(event)" ondragend="dragend_handler(event)"class="s-drag" id="drag${i}-${j}">${conteudo[j].split(')]')[0]}</sdrag>`)
+            conteudo[j] = `<sdrop ondrop="drop_handler(event)" ondragover="dragover_handler(event)" ondragleave="dragleave_handler(event)" class="s-drop questao drop${i}-${j}"></sdrop><span class="oc">${conteudo[j].split(')]')[0]}</span>${conteudo[j].split(')]')[1]}`
+        }
+        conteudo = conteudo.join('')
+        conteudo2 = shuffleArr(conteudo2).join('')
+        divdds[i].innerHTML = `<div class="divdrop">${conteudo}</div><div class="divdrag">${conteudo2}</div>`
+    }
+
+    alt = document.getElementsByClassName('alternativas')
+    for (i = 0; i < alt.length; i++) {
+        nli = alt[i].getElementsByTagName('li').length
+        if (nli > 10) {
+            alt[i].classList.add('col3')
+        } else if (nli > 5) {
+            alt[i].classList.add('col2')
+        }
+    }
+
+
+}
+
+function shuffleArr(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var rand = Math.floor(Math.random() * (i + 1));
+        [array[i], array[rand]] = [array[rand], array[i]]
+    }
+    return array
+}
+
+function dragstart_handler(ev) {
+    ev.currentTarget.setAttribute('data-balloon-h', '')
+    ev.currentTarget.style.opacity = "0.2";
+    ev.dataTransfer.setData("text", ev.target.id);
+    // Tell the browser both copy and move are possible
+    ev.effectAllowed = "move";
+}
+
+function dragover_handler(ev) {
+    // Change the target element's border to signify a drag over event
+    // has occurred
+    ev.currentTarget.classList.add('drop-dragOver')
+    ev.currentTarget.classList.remove('drop-dragOver-errou')
+
+    ev.preventDefault();
+}
+
+function dragleave_handler(ev) {
+    ev.currentTarget.classList.remove('drop-dragOver')
+
+
+}
+
+function drop_handler(ev) {
+    ev.currentTarget.classList.remove('drop-dragOver')
+
+
+    ev.preventDefault();
+    // Get the id of drag source element (that was added to the drag data
+    // payload by the dragstart event handler)
+    var id = document.getElementById(ev.dataTransfer.getData("text"))
+    var di = ev.target.nextElementSibling.innerHTML
+        // Only Move the element if the source and destination ids are both "move"
+    if (id.innerHTML == di) {
+        ev.target.nextElementSibling.style.display = 'inline'
+        ev.target.style.display = 'none'
+        id.style.display = 'none'
+        id.classList.add('certo')
+        animacerto()
+        continua(ev.currentTarget)
+    } else {
+        ev.currentTarget.classList.add('drop-dragOver-errou')
+    }
+}
+
+function dragend_handler(ev) {
+    // Restore source's border
+    ev.currentTarget.style.opacity = "1";
+    // Remove all of the drag data
+    ev.dataTransfer.clearData();
+}
+
+
 
 function savetxt() {
     var blob = new Blob([blocodenotas.innerText], { type: "text/plain;charset=utf-8" });
@@ -82,34 +549,140 @@ function savehtml() {
     saveAs(blob, "index.html");
 }
 
-function ajustar() {
-    roda()
-    blocodenotas.innerHTML = '<p>' + blocodenotas.innerText.replaceAll('<br>', '</p><p>').replaceAll('\n', '</p><p>').replaceAll('div>', 'p>')
-    marcaiframe()
-    roda()
+
+
+function indice() {
+    sumario = ``
+    elems = preview.getElementsByTagName('*')
+    for (i = 0; i < elems.length; i++) {
+        if (elems[i].tagName == 'H1' || elems[i].tagName == 'H2') {
+            if (elems[i].tagName == 'H1') {
+                sumario = sumario + "<div class='sh1'>" + elems[i].innerHTML + '</div>'
+            } else {
+                sumario = sumario + "<div class='sh2'>" + elems[i].innerHTML + '</div>'
+            }
+
+        }
+    }
+    document.getElementById('sumario').innerHTML = `<div id='btsumarioa' onclick='abresumario()'><i class="fas fa-bars"></i></div> <div id="sumario2">${sumario}</div>`
+
 }
 
-function config(y) {
-    x = document.getElementById('configuracoes')
-    b = blocodenotas
-    a = document.getElementsByClassName('botoesf')
 
-    if (y.innerText === 'configurações') {
-        b.style.width = '50%'
-        y.innerText = 'Salvar e fechar'
-        x.classList.remove('desativo')
-        x.classList.add('ativo')
-        y.style.backgroundColor = 'rgba(190, 62, 62, 0.3)'
+function scrola(x) {
+    sum = document.getElementById('sumario2')
+    bts = document.getElementById('btsumarioa')
+    if (x.scrollTop > 250) {
+        sum.classList.add('azul')
+        bts.classList.add('btsazul')
+    } else {
+        sum.classList.remove('azul')
+        bts.classList.remove('btsazul')
+    }
+}
+
+
+
+function abresumario() {
+
+    if (document.getElementById('btsumarioa').innerHTML == `<i class="fas fa-bars" aria-hidden="true"></i>`) {
+        document.getElementById('sections').classList.add("sectionsr")
+        document.getElementById('sumario2').classList.add("sumarioaberto")
+        document.getElementById('btsumarioa').innerHTML = '<i class="fas fa-times"></i>'
+        document.getElementById('btsumarioa').classList.add('fechar')
+    } else {
+        document.getElementById('btsumarioa').innerHTML = '<i class="fas fa-bars"></i>'
+        document.getElementById('sections').classList.remove("sectionsr")
+        document.getElementById('sumario2').classList.remove("sumarioaberto")
+        document.getElementById('btsumarioa').classList.remove('fechar')
+    }
+}
+
+
+function savetxt() {
+    var blob = new Blob([myCodeMirror.getValue('\n')], { type: "text/plain;charset=utf-8" });
+    saveAs(blob, "fonte.txt");
+}
+
+function savehtml() {
+    varresp = `resp=[`
+    for (i = 0; i < resp.length; i++) {
+        varresp = varresp + `[`
+        for (j = 0; j < resp[i].length; j++) {
+            varresp = varresp + `'${resp[i][j]}',`
+        }
+        varresp = varresp + `'${resp[i][resp[i].length-1]}'],`
+    }
+    varresp = varresp + `'']`
+
+    var blob = new Blob([`${antes + prefixo + entrada + posfixo}<script>${varresp}</script>${depois}`], { type: "text/plain;charset=utf-8" });
+    saveAs(blob, "index.html");
+}
+
+/*
+
+function indice() {
+    sumario = ''
+    elems = preview.getElementsByTagName('*')
+    for (i = 0; i < elems.length; i++) {
+        if (elems[i].tagName == 'H1' || elems[i].tagName == 'H2' || elems[i].tagName == 'H3') {
+            sumario = sumario + '<div class="item"><div><div class="bolinha"></div></div>' + elems[i].outerHTML + '</div>'
+        }
+    }
+    document.getElementById('sumario').innerHTML = `<div id='btsumario' onclick='fecha()'></div><div id='linha'></div>` + sumario
+
+}
+
+function fecha() {
+    mudaestilo('ml', '-1500px')
+    mudaestilo('abr', '10px')
+
+}
+
+
+
+function efeito(x) {
+    if (document.documentElement.style.getPropertyValue('--dist') == "0px") {
+        document.documentElement.style.setProperty('--dist', '100px')
+        localStorage.setItem('etapa', '0')
+        roda()
+        x.textContent = 'desativar efeitos'
+        blocodenotas.style.display = 'none'
+        document.getElementsByClassName('botoesf')[0].style.display = 'none'
 
     } else {
-        y.innerText = 'configurações'
-        x.classList.add('desativo')
-        x.classList.remove('ativo')
-        y.style.backgroundColor = 'rgba(58, 58, 58, 0.3)'
+        document.documentElement.style.setProperty('--dist', '0px')
+        x.textContent = 'ativar efeitos'
+        blocodenotas.style.display = 'block'
+        document.getElementsByClassName('botoesf')[0].style.display = 'block'
+
 
     }
-
 }
+
+
+
+function savetxt() {
+    var blob = new Blob([blocodenotas.innerText], { type: "text/plain;charset=utf-8" });
+    saveAs(blob, "fonte.txt");
+}
+
+function savehtml() {
+    varresp = `resp=[`
+    for (i = 0; i < resp.length; i++) {
+        varresp = varresp + `[`
+        for (j = 0; j < resp[i].length; j++) {
+            varresp = varresp + `'${resp[i][j]}',`
+        }
+        varresp = varresp + `'${resp[i][resp[i].length-1]}'],`
+    }
+    varresp = varresp + `'']`
+
+    var blob = new Blob([`${antes + prefixo + entrada + posfixo}<script>${varresp}</script>${depois}`], { type: "text/plain;charset=utf-8" });
+    saveAs(blob, "index.html");
+}
+
+
 
 function cort(x) {
     x.nextElementSibling.value = x.value
@@ -125,8 +698,9 @@ function corc(x) {
 function marcaiframe() {
     x = blocodenotas
     x.innerHTML = x.innerHTML.replaceAll('<p>iframe_', '<p class="iframe">iframe_')
-    document.getElementsByClassName('iframe')[0].innerText = 'iframe_{' + code[0] + '}'
-
+    if (document.getElementsByClassName('iframe')[0] != null) {
+        document.getElementsByClassName('iframe')[0].innerText = 'iframe_{' + code[0] + '}'
+    }
 }
 
 function continua(x) {
@@ -183,50 +757,14 @@ function iframe(x) {
     return a.join('')
 }
 
-function complete(x) {
-    a = x.split('*(')
-    resp = []
 
-    for (i = 1; i < a.length; i++) {
-        certas = a[i].split(')*')[0].split(',')
-        largura = 0
-        for (j = 0; j < certas.length; j++) {
-            if (largura < certas[j].length) {
-                largura = certas[j].length
-            }
-        }
-
-        a[i] = `<input class='complete' type="text" name ="complete" size="${largura}" id="complete${i}" value="???" onclick = "zera(this)" onchange = "verifica(this)"> <span class='spanx'">:</span>` + a[i].replace(a[i].split(')*')[0] + ')*', '')
-        resp.push(certas)
-    }
-
-    x = a.join('')
-
-    return x
-}
 
 function zera(x) {
     x.value = ''
     x.style.backgroundColor = 'rgb(2, 187, 2)'
 }
 
-function marcou(x) {
-    y = x.parentElement
-    if (y.classList.contains('alternativas')) {
 
-        if (x.classList.contains('certa')) {
-            x.classList.add('acertou')
-
-        } else {
-            x.classList.add('errou')
-        }
-        if (y.getElementsByClassName('certa').length == y.getElementsByClassName('acertou').length) {
-            y.classList.add('certo')
-        }
-    }
-    continua(x)
-
-}
 
 
 function verifica(x) {
@@ -244,58 +782,8 @@ function verifica(x) {
 
 }
 
-function tag(x, sinal, inicio, fim) {
-    x = x.split('<p>' + sinal)
-    for (i = 1; i < x.length; i++) {
-        x[i] = x[i].replace('</p>', fim)
-    }
-    return x.join(inicio)
-}
-
-function imagem(x) {
-    x = x.split('img_')
-    for (i = 1; i < x.length; i++) {
-        x[i] = x[i].replace('_!', '">')
-    }
-
-    return x.join('<img class="imgmiddle" src="')
-
-}
 
 
-
-function txt(x, tag, inicio, fim) {
-    x = x.split(tag)
-    for (i = 1; i < x.length; i++) {
-        if (i % 2 == 1) {
-            x[i] = inicio + x[i] + fim
-        }
-    }
-    return x.join('')
-}
-
-function link(x) {
-    x = x.split('~')
-    for (i = 1; i < x.length; i++) {
-        if (i % 2 == 1) {
-            x[i] = x[i].replace(',', '" target="_blank">')
-            x[i] = '<a href="' + x[i] + '</a>'
-        }
-    }
-    return x.join('')
-}
-
-function tabela(x) {
-    x = x.split('<p>||</p>')
-    for (i = 1; i < x.length; i++) {
-        if (i % 2 == 1) {
-            x[i] = '<table>' + x[i] + '</table>'
-
-        }
-    }
-    x = x.join('').replaceAll('<p>|', '<tr><td>').replaceAll('|</p>', '</td></tr>').replaceAll('|', '</td><td>')
-    return x
-}
 
 if (localStorage.getItem(texto).length > 40) {
     blocodenotas.innerHTML = localStorage.getItem(texto)
@@ -304,21 +792,23 @@ if (localStorage.getItem(texto).length > 40) {
 roda()
 
 
-function mudaestilo(a, b) {
-    document.documentElement.style.setProperty('--' + a, b);
-
-}
 
 function abre(n) {
     for (i = 0; i <= n; i++) {
-        document.getElementsByClassName('botaocontinua')[i].style.display = 'none'
-        document.getElementsByTagName('section')[i].style.display = 'block'
+        if (document.getElementsByClassName('botaocontinua').length > 0) {
+            document.getElementsByClassName('botaocontinua')[i].style.display = 'none'
+        }
+        if (document.getElementsByClassName('section').length > 0) {
+            document.getElementsByTagName('section')[i].style.display = 'block'
+        }
     }
-    document.getElementsByClassName('botaocontinua')[n].style.display = 'inline'
+    if (document.getElementsByClassName('botaocontinua').length > 0) {
+        document.getElementsByClassName('botaocontinua')[n].style.display = 'inline'
+    }
 }
 
-
 function roda() {
+
     entrada = blocodenotas.innerHTML.replaceAll('<span style="text-indent: 1.5em;">', '').replaceAll('</span>', '').replaceAll('</br>', '')
     localStorage.setItem(texto, entrada)
     entrada = entrada.replaceAll('div>', 'p>').replaceAll('<p>iframe_', '<p class="iframe">iframe_').replaceAll('<p>_</p>', `<button class='botaocontinua' onclick="continua(this)">Continuar</button></section><section style="display:none">`).replaceAll('\/\\', '</br>')
@@ -327,28 +817,7 @@ function roda() {
     let code = []
     entrada = iframe(entrada)
 
-    entrada = tag(entrada, '###', '<h3>', '</h3>')
-    entrada = tag(entrada, '##', '<h2>', '</h2>')
-    entrada = tag(entrada, '#', '<h1>', '</h1>')
-    entrada = tag(entrada, 'img', `<img class='esquerda' src='`, `'>`)
-    entrada = tag(entrada, '   img', `<img src='`, `'>`)
-    entrada = tag(entrada, '      img', `<img class='direita' src='`, `'>`)
-    entrada = tag(entrada, '      ', `<p style="text-align: right; text-indent:0px">`, '</p>')
-    entrada = tag(entrada, '   ', `<p style="text-align: center; text-indent:0px">`, '</p>')
-    entrada = txt(entrada, '<p>-#</p>', '<ol>', '</ol>')
-    entrada = txt(entrada, '<p>-A</p>', '<ol type=A>', '</ol>')
-    entrada = txt(entrada, '<p>-I</p>', '<ol type=I>', '</ol>')
-    entrada = txt(entrada, '<p>-a</p>', '<ol type="a">', '</ol>')
-    entrada = txt(entrada, '<p>-m</p>', `<div class='alternativas'>`, `</div>`)
-    entrada = tag(entrada, '--', `<li class='certa' onclick='marcou(this)'>`, '</li>')
 
-    entrada = tag(entrada, '-', `<li onclick='marcou(this)'>`, '</li>')
-
-
-
-    entrada = txt(entrada, '***', '<u>', '</u>')
-    entrada = txt(entrada, '**', '<i>', '</i>')
-    entrada = txt(entrada, '*', '<strong>', '</strong>')
     entrada = link(entrada)
     entrada = tabela(entrada)
     entrada = imagem(entrada)
@@ -358,8 +827,12 @@ function roda() {
     chamaiframe()
     abre(localStorage.getItem('etapa'))
     indice()
-    mudaestilo('hlinha', document.getElementsByClassName('item')[document.getElementsByClassName('item').length - 1].offsetTop + 'px')
-    document.getElementsByClassName('bolinha')[0].classList.add('done')
+    if (document.getElementsByClassName('item')[0] != null) {
+        mudaestilo('hlinha', document.getElementsByClassName('item')[document.getElementsByClassName('item').length - 1].offsetTop + 'px')
+    }
+    if (document.getElementsByClassName('bolinha')[0] != null) {
+        document.getElementsByClassName('bolinha')[0].classList.add('done')
+    }
     renderMathInElement(preview, {
         delimiters: [{
             left: "$$",
@@ -372,4 +845,4 @@ function roda() {
 
 function marca() {
 
-}
+} */
