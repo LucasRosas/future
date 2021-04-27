@@ -7,6 +7,7 @@ var etapa = 'etapa'
 var preview = document.getElementById('preview')
 var blocodenotas = document.getElementById('blocodenotas')
 var sumario = ''
+var vetvar = {}
 
 function inicia() {
 
@@ -40,7 +41,7 @@ function animacerto() {
 function roda() {
     entrada = myCodeMirror.getValue('\n')
     localStorage.setItem(texto, entrada)
-    entrada = imagem(link(tabela(complete(entrada))))
+    entrada = imagem(link(tabela(complete(variaveis(entrada)))))
     entrada = formatxt(entrada, '-d', '<div class="divdd">', '</div>')
     entrada = formatxt(entrada, '-#', '<ol>', '</ol>')
     entrada = formatxt(entrada, '-A', '<ol type=A>', '</ol>')
@@ -138,6 +139,68 @@ function tags(x) {
     return x.join('')
 
 }
+
+function variaveis(x) {
+    vetvar = []
+    calculos = []
+    calqulos = []
+    a = x.split("${")
+    for (i = 1; i < a.length; i++) {
+        vari = a[i].split('}')[0]
+        if (vari.substring(0, 1) == 'x' && !isNaN(Number(vari.replace('x', '')))) {
+            vetvar.push(eval(`${vari} = 0`))
+            a[i] = a[i].replace(vari + '}', `<input class='var' id='${vari}' onkeyup="calcula(this)">`)
+        } else {
+            vetvar.push(NaN)
+            a[i] = a[i].replace(vari + '}', `<span class='ERR'>NOME INVÁLIDO PARA INCÓGNITA</span>`)
+        }
+    }
+    a = a.join('')
+    a = a.split("$={")
+    for (i = 1; i < a.length; i++) {
+        calc = a[i].split('}')[0]
+        calculos.push(`eval(Math.max(${calc}))`)
+        a[i] = a[i].replace(calc + '}', `<span class='svar svarvazia'></span>`)
+    }
+    a = a.join('')
+    a = a.split("$?={")
+    for (i = 1; i < a.length; i++) {
+        calq = a[i].split('}')[0]
+        calqulos.push(`eval(Math.max(${calq}))`)
+        a[i] = a[i].replace(calq + '}', `<span class='qsvar questao'></span>`) /* continuar daqui */
+    }
+    a = a.join('')
+    return a
+}
+
+function calcula(x) {
+    eval(`${x.id} = ${Number(String(x.value).replace(',','.'))}`)
+    svar = document.getElementsByClassName('svar')
+    for (i = 0; i < svar.length; i++) {
+        if (!isNaN(eval(calculos[i]))) {
+            svar[i].innerHTML = String(eval(calculos[i])).replace('.', ',')
+            svar[i].classList.remove('svarvazia')
+        } else {
+            svar[i].classList.add('svarvazia')
+            svar[i].innerHTML = ''
+        }
+    }
+
+    qsvar = document.getElementsByClassName('qsvar')
+    for (i = 0; i < qsvar.length; i++) {
+        if (!isNaN(eval(calqulos[i]))) {
+            if (eval(calqulos[i]) == 1) {
+                qsvar[i].classList.add('certo')
+            }
+
+        } else {
+            qsvar[i].innerHTML = ''
+        }
+    }
+
+}
+
+
 
 function complete(x) {
     a = x.split('[[')

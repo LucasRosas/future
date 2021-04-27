@@ -115,7 +115,7 @@ body {
     font-family: Consolas, Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     color: aliceblue;
     position: relative;
-    width: 10%;
+    width: 50%;
     transition: width 1s cubic-bezier(0.075, 0.82, 0.165, 1);
     height: 100%;
     background: rgb(0, 25, 44);
@@ -133,7 +133,7 @@ body {
     color: var(--cor0);
     font-family: var(--font1);
     position: relative;
-    width: 90%;
+    width: 50%;
     height: calc(100% - 10px);
     padding: 0px;
     padding-left: 0;
@@ -192,6 +192,8 @@ p {
 
 #sumario2 {
     width: 250px;
+    pointer-events: none;
+    content-visibility: hidden;
     padding-top: 20px;
     padding-bottom: 50px;
     padding-left: 10px;
@@ -214,6 +216,8 @@ p {
     display: block !important;
     padding-left: 20px !important;
     margin-left: 2px !important;
+    pointer-events: auto !important;
+    content-visibility: visible !important;
 }
 
 .sh1 {
@@ -1090,4 +1094,34 @@ code {
     height: 100%;
     width: 100%;
     z-index: 3000;
+}
+
+.var {
+    outline: none;
+    width: 50px;
+    border-radius: 4px;
+    text-align: center;
+    border-width: 1px;
+    border-left: 3px solid var(--cor2);
+}
+
+.svarvazia {
+    display: inline-block;
+    width: 30px;
+    height: 20px;
+    vertical-align: middle;
+    text-indent: 0px;
+    background-image: url(../img/svar.png);
+    background-size: cover;
+}
+
+.svarvazia::before {
+    content: '_';
+    color: transparent;
+}
+
+.ERR {
+    background-color: darkred;
+    color: white;
+    padding: 2px 5px;
 }
