@@ -498,7 +498,6 @@ function mostra(x) {
 
 
 function botaocontinua(n) {
-    animacerto()
     sections = document.getElementsByTagName('SECTION')
     if (n + 1 == sections.length) {
         var divfim = document.createElement('div')
