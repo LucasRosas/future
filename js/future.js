@@ -1,28 +1,31 @@
 var entrada
 var texto = 'memoria'
 var localestilo = 'estilo'
-var prefixo = `<div id="bm"></div><div id='cover' onmousedown="coverposition1()" onmousemove="coverposition2()" onmouseup="boler = false"></div><div id="ss"><div id="sumario"></div><div id="sections"><section>`
-var posfixo = '</section></div></div>'
+var prefixo = `<div id="bm"></div><div id="progressbar"></div><div id='cover' onmousedown="coverposition1()" onmousemove="coverposition2()" onmouseup="boler = false"></div><div id="ss"><div id="sumario"></div><div id="sections"><section>`
+var posfixo = "</section></div></div>"
 var etapa = 'etapa'
 var preview = document.getElementById('preview')
 var blocodenotas = document.getElementById('blocodenotas')
 var sumario = ''
 var vetvar = {}
+var estilo = JSON.parse(localStorage.getItem('estilo'))
+if (estilo.dm == undefined) { var dm = false } else { var dm = estilo.dm }
+if (estilo.corA == null) { var corA = '' } else { var corA = estilo.corA }
+if (estilo.corB == null) { var corB = '' } else { var corB = estilo.corB }
+if (estilo.font1 == null) { var font1 = '' } else { var font1 = estilo.font1 }
+if (estilo.font2 == null) { var font2 = '' } else { var font2 = estilo.font2 }
+if (estilo.imgcoverurl == null) { var imgcoverurl = '' } else { var imgcoverurl = estilo.imgcoverurl }
+if (estilo.covery == null) { var covery = 0 } else { var covery = estilo.covery }
 
 function inicia() {
-
-
-
-    for (k in estilo) {
-        mudaestilo(k, estilo[k])
-    }
+    mudacor(estilo.corA, estilo.corB)
     setacores()
     roda()
     ajustacontraste()
-
-
     addImage(estilo.imgcoverurl)
-    animacerto()
+    mudaestilo('font1', font1)
+    mudaestilo('font2', font2)
+    mudaestilo('covery', covery + 'px')
 
 }
 
@@ -31,6 +34,17 @@ function animacerto() {
         container: document.getElementById('bm'),
         renderer: 'sgv',
         loop: false,
+        autoplay: true,
+        path: 'data.json'
+
+    })
+}
+
+function animafim() {
+    var animation = bodymovin.loadAnimation({
+        container: document.getElementById('end'),
+        renderer: 'sgv',
+        loop: true,
         autoplay: true,
         path: 'data.json'
 
@@ -149,7 +163,7 @@ function variaveis(x) {
         vari = a[i].split('}')[0]
         if (vari.substring(0, 1) == 'x' && !isNaN(Number(vari.replace('x', '')))) {
             vetvar.push(eval(`${vari} = 0`))
-            a[i] = a[i].replace(vari + '}', `<input class='var' id='${vari}' onkeyup="calcula(this)">`)
+            a[i] = a[i].replace(vari + '}', `<input class='var' id='${vari}' onchange="calcula(this)">`)
         } else {
             vetvar.push(NaN)
             a[i] = a[i].replace(vari + '}', `<span class='ERR'>NOME INVÁLIDO PARA INCÓGNITA</span>`)
@@ -191,6 +205,8 @@ function calcula(x) {
         if (!isNaN(eval(calqulos[i]))) {
             if (eval(calqulos[i]) == 1) {
                 qsvar[i].classList.add('certo')
+                continua(x)
+
             }
 
         } else {
@@ -385,7 +401,6 @@ function marcou(x) {
 
         if (x.classList.contains('certa')) {
             x.classList.add('acertou')
-            animacerto()
 
         } else {
             x.classList.add('errou')
@@ -408,7 +423,6 @@ function escolheu(x) {
         avo.classList.add('certo')
         avo.classList.remove('marc')
         avo.nextElementSibling.classList.remove('xis')
-        animacerto()
         continua(avo)
     } else {
         x.style.backgroundColor = 'darkred'
@@ -427,8 +441,8 @@ function continua(x) {
     if (y.classList.contains('completo')) {
         y.nextElementSibling.style.display = 'block'
         botaocontinua(Array.from(document.getElementsByTagName('section')).indexOf(y) + 1)
-
         k = Array.from(document.getElementsByClassName('botaocontinua')).indexOf(x) + 1
+
         if (localStorage.getItem('etapa') < k) {
             localStorage.setItem('etapa', k)
         }
@@ -463,7 +477,6 @@ function verifica(x) {
             x.nextElementSibling.style.display = 'inline';
             x.nextElementSibling.textContent = resposta;
             x.nextElementSibling.classList.add('certo')
-            animacerto()
             continua(x)
         } else { x.style.backgroundColor = 'darkred'; }
     } else if (resp[pergunta - 1].includes(resposta)) {
@@ -471,7 +484,6 @@ function verifica(x) {
         x.nextElementSibling.style.display = 'inline';
         x.nextElementSibling.textContent = resposta;
         x.nextElementSibling.classList.add('certo')
-        animacerto()
         continua(x)
     } else {
         x.style.backgroundColor = 'darkred';
@@ -486,7 +498,14 @@ function mostra(x) {
 
 
 function botaocontinua(n) {
+    animacerto()
     sections = document.getElementsByTagName('SECTION')
+    if (n + 1 == sections.length) {
+        var divfim = document.createElement('div')
+        divfim.setAttribute("id", "end");
+        sections[n].parentNode.insertBefore(divfim, sections[n].nextElementSibling)
+        animafim()
+    }
     btncontinua = document.createElement('button')
     btncontinua.innerHTML = "Continuar"
     btncontinua.classList.add('botaocontinua')
@@ -494,7 +513,9 @@ function botaocontinua(n) {
         this.previousElementSibling.classList.add('completo')
         this.nextElementSibling.style.display = 'block'
         this.style.display = 'none'
+
         botaocontinua(n + 1)
+
     }
     if (sections[n].nextElementSibling != null) {
         if (sections[n].nextElementSibling.tagName != 'BUTTON' && n != sections.length && (sections[n].getElementsByClassName('questao')[0] == null || sections[n].getElementsByClassName('completo')[0] != null)) {
@@ -576,7 +597,6 @@ function drop_handler(ev) {
         ev.target.style.display = 'none'
         id.style.display = 'none'
         id.classList.add('certo')
-        animacerto()
         continua(ev.currentTarget)
     } else {
         ev.currentTarget.classList.add('drop-dragOver-errou')
@@ -592,42 +612,29 @@ function dragend_handler(ev) {
 
 
 
-function savetxt() {
-    var blob = new Blob([blocodenotas.innerText], { type: "text/plain;charset=utf-8" });
-    saveAs(blob, "fonte.txt");
-}
-
-function savehtml() {
-    varresp = `resp=[`
-    for (i = 0; i < resp.length; i++) {
-        varresp = varresp + `[`
-        for (j = 0; j < resp[i].length; j++) {
-            varresp = varresp + `'${resp[i][j]}',`
-        }
-        varresp = varresp + `'${resp[i][resp[i].length-1]}'],`
-    }
-    varresp = varresp + `'']`
-
-    var blob = new Blob([`${antes + prefixo + entrada + posfixo}<script>${varresp}</script>${depois}`], { type: "text/plain;charset=utf-8" });
-    saveAs(blob, "index.html");
-}
 
 
 
 function indice() {
     sumario = ``
     elems = preview.getElementsByTagName('*')
+    k = 0
     for (i = 0; i < elems.length; i++) {
-        if (elems[i].tagName == 'H1' || elems[i].tagName == 'H2') {
+        if (elems[i].tagName == 'H1' || elems[i].tagName == 'H2' || elems[i].tagName == 'H3') {
+            elems[i].id = `hk${k}`
             if (elems[i].tagName == 'H1') {
-                sumario = sumario + "<div class='sh1'>" + elems[i].innerHTML + '</div>'
+                sumario = `${sumario}<a href='#hk${k}'><div class='sh1' >${elems[i].innerHTML}</div></a>`
+            } else if (elems[i].tagName == 'H2') {
+                sumario = `${sumario}<a href='#hk${k}'><div class='sh2' >${elems[i].innerHTML}</div></a>`
             } else {
-                sumario = sumario + "<div class='sh2'>" + elems[i].innerHTML + '</div>'
+                sumario = `${sumario}<a href='#hk${k}'><div class='sh3' >${elems[i].innerHTML}</div></a>`
             }
+            k++
+
 
         }
     }
-    document.getElementById('sumario').innerHTML = `<div id='btsumarioa' onclick='abresumario()'><i class="fas fa-bars"></i></div> <div id="sumario2">${sumario}</div>`
+    document.getElementById('sumario').innerHTML = `<div id='btsumarioa' onclick='abresumario()'><i class="fas fa-bars"></i></div> <div id="sumario2">${sumario}<div id="btlibera">Abrir todas as seções</div></div>`
 
 }
 
@@ -635,12 +642,15 @@ function indice() {
 function scrola(x) {
     sum = document.getElementById('sumario2')
     bts = document.getElementById('btsumarioa')
+    mudaestilo('wbar', `${x.scrollTop / preview.getElementsByTagName('p').length}% `)
     if (x.scrollTop > 250) {
         sum.classList.add('azul')
         bts.classList.add('btsazul')
+
     } else {
         sum.classList.remove('azul')
         bts.classList.remove('btsazul')
+
     }
 }
 
@@ -909,3 +919,22 @@ function roda() {
 function marca() {
 
 } */
+
+function altura() {
+    console.log('rolou');
+    let alturaf = document.documentElement.clientHeight
+    let altura = Math.max(
+        document.body.scrollHeight, document.documentElement.scrollHeight,
+        document.body.offsetHeight, document.documentElement.offsetHeight,
+        document.body.clientHeight, document.documentElement.clientHeight
+    );
+    a = window.pageYOffset
+    b = altura - alturaf + 1
+    c = 100 * a / 14915
+    document.getElementById('progressbar').style.width = c + '%'
+}
+
+
+
+
+window.onscroll = function() { altura() };

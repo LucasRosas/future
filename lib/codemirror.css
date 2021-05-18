@@ -307,8 +307,9 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 
 .CodeMirror * {
     font-family: Consolas;
-    font-size: 18px;
-    line-height: 25px;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: justify;
 }
 
 .CodeMirror-scroll {

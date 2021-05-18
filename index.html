@@ -27,8 +27,9 @@
     <script src="https://kit.fontawesome.com/029cf7ac2a.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="css/font-awesome.min.css">
+
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Asap:wght@400;500;700&family=Lexend+Deca&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Poppins:wght@400;600;900&family=Reem+Kufi&family=Roboto:wght@100;500;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@400;600&family=Lexend+Deca&family=Montserrat:wght@200;600&family=Nunito&display=swap" rel="stylesheet">
 
 
     <script src="js/codecogs.js"></script>
@@ -46,9 +47,9 @@
 <body onload="inicia()" id="my-scrollbar">
 
     <div id="ferramentas">
-        <div class="skil" aria-label="Configurar cores, fontes e imagem" data-balloon-pos="down-left" title="Configurações" onclick="config()"><i class="fas fa-palette"></i></div>
+        <div class="skil" aria-label="Configurar cores, fontes e imagem" data-balloon-pos="down-left" title="Configurações" onclick="config()"><i class="fas fa-pen-square"></i></div>
         <div class='separador'></div>
-        <div class="skil" aria-label="*negrito*" data-balloon-pos="down-left" onclick="bold()" title="Negrito">
+        <!-- <div class="skil" aria-label="*negrito*" data-balloon-pos="down-left" onclick="bold()" title="Negrito">
             <strong>B</strong>
         </div>
         <div class="skil" aria-label="**italico**" data-balloon-pos="down" title="Itálico"><i>I</i></div>
@@ -77,159 +78,109 @@
         <div class="skil" data-balloon-length="medium" aria-label="Arraste e Solta -d [(resposta)]" data-balloon-pos="down"><strong>(&#160;)</strong></div>
         <div class="skil" data-balloon-length="medium" aria-label="Cascata Múltipla Escolha [[[certo]|errado]]" data-balloon-pos="down"><strong>(A)</strong></div>
         <div class='separador'></div>
+        <div class="skil" data-balloon-length="medium" aria-label="Pegar valor ${x1}" data-balloon-pos="down"><strong>(x)</strong></div>
+        <div class="skil" data-balloon-length="medium" aria-label="Calcular $={2*x1}" data-balloon-pos="down"><strong>2x</strong></div>
+        <div class="skil" data-balloon-length="medium" aria-label="Verificar $?={x1>1}" data-balloon-pos="down"><strong>x?</strong></div>
+        <div class='separador'></div> -->
+        <div class="skil" onclick="code_sh()" title="Mostra Código"><i class="fas fa-code"></i></div>
+        <div class="skil" onclick="code_hi()" title="Tela cheia"><i class="fas fa-window-maximize"></i></div>
+        <div class='separador'></div>
         <div class="skil" onclick="savetxt()" title="Baixar txt"><i class="fas fa-download"></i></div>
         <div class="skil" onclick="savehtml()" title="Abrir Livro"><i class="fas fa-share-square"></i></div>
         <div class="skil" title="compartilhar Livro"><i class="fas fa-share-alt"></i></div>
 
-
-
-
-
-
-
     </div>
     <div id="configuracoes" class="desativo">
-        <h2>Capa</h2>
-        <label for="urlcover"><i class="fas fa-image"></i></label>
-        <input id="urlcover" onchange="addImage( `url(${this.value})`)" value="" class="inputimg">
-        <h2>Estilos</h2>
-        <h2>Personalizado</h2>
-        <h3>Fontes</h3>
         <div class="config-box">
-            <form>
-                <div>
-                    <label for="fonte1">Fonte Principal:</label>
-                    <select id="fonte1" name="fonte" class="opcoes" onchange="mudaestilo('font1',this.value)">
-
-                        <option value="Arial" style="font-family: Arial;">Arial</option>
-                        <option value="Asap" style="font-family: Asap;">Asap</option>
-                        <option value="Cambria" style="font-family: Cambria;">Cambria</option>
-                        <option value="Georgia" style="font-family: Georgia;">Georgia</option>
-                        <option value="Lexend Deca" style="font-family: Lexend Deca;">Lexend Deca</option>
-                        <option value="Libre Baskerville" style="font-family: Libre Baskerville;">Libre Baskerville
-                        </option>
-                        <option value="Poppins" style="font-family: Poppins;">Poppins</option>
-                        <option value="Reem Kufi" style="font-family: Reem Kufi;">Reem Kufi</option>
-                        <option value="Roboto" style="font-family: Roboto;">Roboto</option>
-                        <option value="Verdana" style="font-family: Verdana;">Verdana</option>
-
-
-                    </select>
-                </div>
-                <div>
-                    <label for="fonte2">Fonte Secundária:</label>
-                    <select id="fonte2" name="fonte" class="opcoes" onchange="mudaestilo('font2',this.value)">
-                        <option value="Arial" style="font-family: Arial;">Arial</option>
-                        <option value="Asap" style="font-family: Asap;">Asap</option>
-                        <option value="Cambria" style="font-family: Cambria;">Cambria</option>
-                        <option value="Georgia" style="font-family: Georgia;">Georgia</option>
-                        <option value="Lexend Deca" style="font-family: Lexend Deca;">Lexend Deca</option>
-                        <option value="Libre Baskerville" style="font-family: Libre Baskerville;">Libre Baskerville
-                        </option>
-                        <option value="Poppins" style="font-family: Poppins;">Poppins</option>
-                        <option value="Reem Kufi" style="font-family: Reem Kufi;">Reem Kufi</option>
-                        <option value="Roboto" style="font-family: Roboto;">Roboto</option>
-                        <option value="Verdana" style="font-family: Verdana;">Verdana</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="fonte3">Fonte Math:</label>
-                    <select id="fonte3" name="fonte" class="opcoes" onchange="mudaestilo('font3',this.value)">
-                        <option value="Arial" style="font-family: Arial;">Arial</option>
-                        <option value="Asap" style="font-family: Asap;">Asap</option>
-                        <option value="Cambria" style="font-family: Cambria;">Cambria</option>
-                        <option value="Georgia" style="font-family: Georgia;">Georgia</option>
-                        <option value="Lexend Deca" style="font-family: Lexend Deca;">Lexend Deca</option>
-                        <option value="Libre Baskerville" style="font-family: Libre Baskerville;">Libre Baskerville
-                        </option>
-                        <option value="Poppins" style="font-family: Poppins;">Poppins</option>
-                        <option value="Reem Kufi" style="font-family: Reem Kufi;">Reem Kufi</option>
-                        <option value="Roboto" style="font-family: Roboto;">Roboto</option>
-                        <option value="Verdana" style="font-family: Verdana;">Verdana</option>
-                    </select>
-                </div>
-            </form>
-
+            <div class="cbh">Editar capa</div>
+            <div class="cbc">
+                <div class="cbcimage"></div>
+                <span contenteditable="true">Título</span>
+                <div class="cbcbotao" contenteditable="true">Abrir Capítulo</div>
+            </div>
+            <label for="urlcover"><i class="fas fa-image"></i></label>
+            <input id="urlcover" onchange="addImage( `url(${this.value})`)" value="" class="inputimg">
         </div>
 
 
-        <h3>Cores</h3>
         <div class="config-box">
-            <form>
-                <div>
+            <div class="cbh">Fontes</div>
+            <div class="cbo">
+                <div style="font-family: Arial;" onclick="mudaestilo('font1','Arial');mudaestilo('font2','Montserrat')">Arial</div>
+                <div style="font-family: Lexend Deca;" onclick="mudaestilo('font1','Lexend Deca');mudaestilo('font2','Montserrat')">Lexend Deca</div>
+                <div style="font-family: Verdana;" onclick="mudaestilo('font1','Verdana');mudaestilo('font2','Montserrat')">Verdana</div>
+                <div style="font-family: Nunito;" onclick="mudaestilo('font1','Nunito');mudaestilo('font2','Montserrat')">Nunito</div>
 
-                    <label for="cor0">Texto:</label>
-                    <input class="opcoes cor" type="color" value="#000000" id="cor0" onchange="cornome(this)"> <input maxlength="7" id="or0" onchange="corvalor(this)" value="#000000" class="inputcor">
-                </div>
-                <div><label for="cor1">Título Principal:</label>
-                    <input class="opcoes cor" type="color" value="#000000" id="cor1" onchange="cornome(this)"> <input maxlength="7" id="or1" onchange="corvalor(this)" value="#000000" class="inputcor">
-
-                </div>
-                <div><label for="cor2">Título Secundário:</label>
-                    <input class="opcoes cor" type="color" value="#0a2a58" id="cor2" onchange="cornome(this)"> <input maxlength="7" id="or2" onchange="corvalor(this)" value="#0a2a58" class="inputcor">
-
-                </div>
-                <div><label for="cor3">Título Terciário:</label>
-                    <input class="opcoes cor" type="color" value="#0070bb" id="cor3" onchange="cornome(this)"> <input maxlength="7" id="or3" onchange="corvalor(this)" value="#0070bb" class="inputcor">
-
-                </div>
-                <div><label for="cor4">Detalhes:</label>
-                    <input class="opcoes cor" type="color" value="#56bda4" id="cor4" onchange="cornome(this)"> <input maxlength="7" id="or4" onchange="corvalor(this)" value="#56bda4" class="inputcor">
-
-                </div>
-                <div><label for="cor5">Fundo Tabela 1:</label>
-                    <input class="opcoes cor" type="color" value="#5B9BD5" id="cor5" onchange="cornome(this)"> <input maxlength="7" id="or5" onchange="corvalor(this)" value="#5B9BD5" class="inputcor">
-
-                </div>
-                <div><label for="cor6">Fundo Tabela 2:</label>
-                    <input class="opcoes cor" type="color" value="#f2f2f2" id="cor6" onchange="cornome(this)"> <input maxlength="7" id="or6" onchange="corvalor(this)" value="#f2f2f2" class="inputcor">
-
-                </div>
-                <div><label for="cor7">Texto dos botões:</label>
-                    <input class="opcoes cor" type="color" value="#000000" id="cor7" onchange="cornome(this)"> <input maxlength="7" id="or7" onchange="corvalor(this)" value="#000000" class="inputcor">
-
-                </div>
-                <div><label for="cor8">Fundo dos botões:</label>
-                    <input class="opcoes cor" type="color" value="#ffffff" id="cor8" onchange="cornome(this)"> <input maxlength="7" id="or8" onchange="corvalor(this)" value="#ffffff" class="inputcor">
-
-                </div>
-                <div><label for="cor9">Texto Completar:</label>
-                    <input class="opcoes cor" type="color" value="#05978b" id="cor9" onchange="cornome(this)"> <input maxlength="7" id="or9" onchange="corvalor(this)" value="#05978b" class="inputcor">
-
-                </div>
-                <div><label for="cor10">Resposta Certa:</label>
-                    <input class="opcoes cor" type="color" value="#bcd53f" id="cor10" onchange="cornome(this)"> <input maxlength="7" id="or10" onchange="corvalor(this)" value="#bcd53f" class="inputcor">
-
-                </div>
-                <div><label for="cor11">Resposta Errada:</label>
-                    <input class="opcoes cor" type="color" value="#D69592" id="cor11" onchange="cornome(this)"> <input maxlength="7" id="or11" onchange="corvalor(this)" value="#D69592" class="inputcor">
-
-                </div>
-
-            </form>
+                <div style="font-family: 'Hepta Slab';" onclick="mudaestilo('font1','Hepta Slab');mudaestilo('font2','Montserrat')">Hepta Slab</div>
+            </div>
+            <div class="cbp">
+                <h1>Pela toca do Coelho</h1>
+                <span>LEWIS CARROLL</span>
+                <p>Alice estava começando a ficar muito cansada de estar sentada ao lado da irmã na
+                    <def>ribanceira</def>, e de não ter nada que fazer;</p>
+            </div>
         </div>
 
-        <h3>Distâncias e tamanhos</h3>
-        </br>
-        </br>
-        </br>
-        </br>
-        </br>
-        </br>
-        </br>
-        </br>
-        </br>
-        </br>
+        <div class="config-box">
+            <div class="cbh">Cores</div>
+            <div class="cbo">
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #1F2937 0%, #111827 100%); color: white; font-size: 22px; text-align: center; vertical-align: middle; line-height: 40px;" onclick="darkmode()"><i class="fas fa-moon"></i></div>
 
+                <div style="width:105px; height: 40px; background: linear-gradient(146deg, var(--cor1) 0%, var(--cor2) 100%); border: 2px dashed #1F2937; color: white; font-size: 22px; text-align: left; vertical-align: middle; line-height: 40px;">
+                    <label for="cor1"><i class="fas fa-fill-drip"></i></label>&nbsp;
+                    <label for="cor2"><i class="fas fa-fill-drip"></i></label>
+                    <input class="opcoes cor" type="color" value="#0a2a58" id="cor1" style="display: none;" onchange="mudacor(this.value, corB)">
+                    <input class="opcoes cor" type="color" value="#0a2a58" id="cor2" style="display: none;" onchange="mudacor(corA,this.value)">
 
+                </div>
 
+                </br>
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #1aa1a1 0%, #157474 100%);" onclick="mudacor('#1aa1a1','#157474')"></div>
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #21993f 0%, #185a29 100%);" onclick="mudacor('#21993f','#185a29')"></div>
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #06d6a0 0%, #003049 100%);" onclick="mudacor('#06d6a0','#003049')"></div>
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #52b69a 0%, #606c38 100%);" onclick="mudacor('#52b69a','#606c38')"></div>
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #457b9d 0%, #1b4332 100%);" onclick="mudacor('#457b9d','#1b4332')"></div>
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #55a630 0%, #64dfdf 100%);" onclick="mudacor('#55a630','#64dfdf')"></div>
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #81b29a 0%, #023e8a 100%);" onclick="mudacor('#81b29a','#023e8a')"></div>
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #023047 0%, #219ebc 100%);" onclick="mudacor('#023047','#219ebc')"></div>
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #09095e 0%, #2323b4 100%);" onclick="mudacor('#09095e','#2323b4')"></div>
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #274483 0%, #0a9396 100%);" onclick="mudacor('#274483','#274483')"></div>
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #834cdb 0%, #361646 100%);" onclick="mudacor('#834cdb','#361646')"></div>
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #3f37c9 0%, #7209b7 100%);" onclick="mudacor('#3f37c9','#7209b7')"></div>
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #ef476f 0%, #d62828 100%);" onclick="mudacor('#ef476f','#d62828')"></div>
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #FABF15 0%, #FA7A16 100%);" onclick="mudacor('#FABF15','#FA7A16')"></div>
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #e07a5f 0%, #faa307 100%);" onclick="mudacor('#e07a5f','#faa307')"></div>
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #f4a261 0%, #e76f51 100%);" onclick="mudacor('#f4a261','#e76f51')"></div>
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #bb3e03 0%, #a56f18 100%);" onclick="mudacor('#bb3e03','#a56f18')"></div>
 
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #4472C4 0%, #3259A0 100%);" onclick="mudacor('#4472C4','#3259A0')"></div>
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #ED7D31 0%, #CC5D12 100%);" onclick="mudacor('#ED7D31','#CC5D12')"></div>
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #FFC000 0%, #FFC000 100%);" onclick="mudacor('#FFC000','#FFC000')"></div>
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #5B9BD5 0%, #5B9BD5 100%);" onclick="mudacor('#5B9BD5','#5B9BD5')"></div>
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #70AD47 0%, #70AD47 100%);" onclick="mudacor('#70AD47','#70AD47')"></div>
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #C0504D 0%, #A13B39 100%);" onclick="mudacor('#C0504D','#A13B39')"></div>
+                <div style="width:40px; height: 40px; background: linear-gradient(146deg, #8064A2 0%, #4BACC6 100%);" onclick="mudacor('#8064A2','#4BACC6')"></div>
+
+            </div>
+
+        </div>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
+        </br>
     </div>
 
     <div id="container">
         <div id="blocodenotas" onkeyup="roda()">
         </div>
-        <div id="resize"></div>
         <div id="preview" onclick="fechaconfig()" onscroll="scrola(this)"></div>
     </div>
     <script src="js/future.js"></script>

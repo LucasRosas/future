@@ -104,7 +104,7 @@
 }
 
 .katex {
-    font: normal 15px var(--font3), Verdana, KaTeX_Main, Times New Roman, serif;
+    font: normal 15px var(--font1), Verdana, KaTeX_Main, Times New Roman, serif;
     line-height: 20px;
     text-indent: 0;
     text-rendering: auto;

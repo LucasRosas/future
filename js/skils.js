@@ -1,16 +1,32 @@
 // Código dos botões na barra de ferramentas
 
+function code_sh() {
+    document.getElementById('blocodenotas').style.width = '50%'
+}
 
 
-var estilo = {}
+function code_hi() {
 
-function configuracoes() { }
+    if (document.getElementById('configuracoes').classList.contains('ativo')) { config() }
+    document.getElementById('blocodenotas').style.width = '0px'
+
+
+
+}
+
+function configuracoes() {}
 
 boler = false
 
 function mudaestilo(a, b) {
+    if (a == 'font1') {
+        font1 = b
+    }
+    if (a == 'font2') {
+        font2 = b
+    }
     document.documentElement.style.setProperty('--' + a, b);
-    estilo[a] = b
+    estilo = { corA: corA, corB: corB, dm: dm, imgcoverurl: imgcoverurl, covery: covery, font1: font1, font2: font2 }
     localStorage.setItem(localestilo, JSON.stringify(estilo))
 }
 
@@ -35,7 +51,7 @@ function setacores() {
 function ajustacontraste() {
     x = document.getElementsByClassName('cor')
     for (i = 0; i < x.length; i++) {
-        mudaestilo(x[i].id + 'd', chroma(x[i].value).darken().hex())
+        mudaestilo(x[i].id + 'd', chroma(x[i].value).darken(2).hex())
         if (chroma.contrast(x[i].value, '#000000') >= 6) {
             mudaestilo(x[i].id + 'c', '#000000')
         } else {
@@ -44,12 +60,88 @@ function ajustacontraste() {
     }
 }
 
+
+function darkmode() {
+    if (dm == true) {
+        dm = false
+    } else {
+        dm = true
+    }
+    if (corA == '') {
+        mudacor('#023e8a', '#81b29a')
+    } else {
+        mudacor(corA, corB)
+    }
+}
+var vetcor
+
+function mudacor(a, b) {
+    if (a == '' && b == '') {
+
+    } else {
+        if (chroma.contrast('black', a) > chroma.contrast('black', b)) {
+            corA = b
+            corB = a
+        } else {
+            corA = a
+            corB = b
+        }
+        vetcor = {
+            cor1: corA,
+            cor2: corB,
+            cor3: chroma(corA).desaturate(3).hex(),
+            cor4: chroma(corB).saturate(2).hex(),
+            cor5: chroma(corB).desaturate(2).hex(),
+            cor6: chroma(corA).saturate(2).hex(),
+            cor7: chroma.blend(corA, corB, 'lighten').hex(),
+            cor8: chroma.mix(corA, corB, 0.1, 'lch').brighten(2.5).hex(),
+            cor9: chroma.blend(corA, corB, 'lighten').hex(),
+            cor10: chroma.average([corA, '#bcd53f', '#5FD274', '#5FD274', '#bcd53f'], 'rgb').hex(),
+        }
+    }
+
+    for (var prop in vetcor) {
+        mudaestilo(prop, vetcor[prop])
+    }
+    if (dm) {
+        mudaestilo('cor0', 'white')
+        mudaestilo('corback', '#1F2937')
+        for (var prop in vetcor) {
+            mudaestilo(prop, chroma(vetcor[prop]).luminance(0.5).hex())
+            mudaestilo(prop + 'd', chroma(vetcor[prop]).luminance(0.5).darken().hex())
+            mudaestilo(prop + 'ds', chroma(vetcor[prop]).luminance(0.5).darken(2).hex())
+
+            if (chroma.contrast(vetcor[prop], '#000000') >= 5) {
+                mudaestilo(prop + 'c', '#000000')
+            } else {
+                mudaestilo(prop + 'c', '#ffffff')
+            }
+        }
+    } else {
+        mudaestilo('cor0', 'black')
+        mudaestilo('corback', 'white')
+        for (var prop in vetcor) {
+            mudaestilo(prop, vetcor[prop])
+            mudaestilo(prop + 'd', chroma(vetcor[prop]).darken().hex())
+            mudaestilo(prop + 'dd', chroma(vetcor[prop]).darken(2).hex())
+
+            if (chroma.contrast(vetcor[prop], '#000000') >= 5) {
+                mudaestilo(prop + 'c', '#000000')
+            } else {
+                mudaestilo(prop + 'c', '#ffffff')
+            }
+        }
+    }
+
+}
+
 var imageHeight = 0
 var image = new Image();
-var covery = 0
+
 var boler = false
 var dist = 0
 var e = window.event;
+
 
 
 /* function coord() {
@@ -61,7 +153,7 @@ var e = window.event;
 
 function addImage(x) {
     mudaestilo('imgcoverurl', x)
-
+    imgcoverurl = x
     image.src = x.split('url(')[1].replace(')', '')
     if (image.width > 0) {
         imageHeight = window.innerWidth * image.height / image.width
@@ -72,6 +164,7 @@ function addImage(x) {
 
 
 function coverposition1() {
+    code_hi()
     var e = window.event;
     boler = true
     posy1 = e.clientY - covery;
@@ -79,9 +172,9 @@ function coverposition1() {
 }
 
 function coverposition2() {
+
     var e = window.event;
     if (boler) {
-
         posy2 = e.clientY
         covery = Math.min(Math.max(posy2 - posy1, 350 - imageHeight), 0)
         mudaestilo('covery', covery + 'px')
@@ -111,6 +204,7 @@ function config() {
     if (x.classList.contains('desativo')) {
         x.classList.remove('desativo')
         x.classList.add('ativo')
+        code_sh()
     } else {
         fechaconfig()
 
@@ -142,7 +236,7 @@ function italic() {
 
 }
 
-function sublinhado() { }
+function sublinhado() {}
 
 function h1() {
     myCodeMirror.setSelection({ line: 6, ch: 0 }, { line: 7, ch: 0 })
@@ -151,36 +245,36 @@ function h1() {
 }
 
 
-function h2() { }
+function h2() {}
 
 
-function h3() { }
+function h3() {}
 
-function justificado() { }
+function justificado() {}
 
-function centraliza() { }
+function centraliza() {}
 
-function alinhadodireita() { }
+function alinhadodireita() {}
 
-function lista() { }
+function lista() {}
 
-function listaordenada() { }
+function listaordenada() {}
 
-function link() { }
+function link() {}
 
-function imagem() { }
+function imagem() {}
 
-function tabela() { }
+function tabela() {}
 
-function multiplaescolha() { }
+function multiplaescolha() {}
 
-function completaespaco() { }
+function completaespaco() {}
 
-function baixartxt() { }
+function baixartxt() {}
 
-function abrirlivro() { }
+function abrirlivro() {}
 
-function compartilharlivro() { }
+function compartilharlivro() {}
 
 function selecionapalavra() {
     a1 = myCodeMirror.getCursor().line;
