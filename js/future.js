@@ -669,6 +669,12 @@ function abresumario() {
         document.getElementById('btsumarioa').classList.remove('fechar')
     }
 }
+var title = 'Livro Interativo'
+
+function titulo(x) {
+    title = x.innerText
+    console.log(title);
+}
 
 
 function savetxt() {

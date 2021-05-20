@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Criação - Future</title>
+    <link rel="stylesheet" href="css/katex.min.css" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.js" integrity="sha384-FaFLTlohFghEIZkw6VGwmf9ISTubWAVYW8tG8+w2LAIftJEULZABrF9PPFv+tVkH" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/contrib/auto-render.min.js" integrity="sha384-bHBqxz8fokvgoJ/sc17HODNxa42TlaEhB+w8ZJXTc2nZf1VgEaFZeZvT4Mznfz0v" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+    <link rel="stylesheet" href="css/estilos2.css">
+</head>
+
+<body>
+    <div id="bm"></div>
+    <div id="progressbar"></div>
+    <div id='cover' onmousedown="coverposition1()" onmousemove="coverposition2()" onmouseup="boler = false"></div>
+    <div id="ss">
+        <div id="sumario"></div>
+        <div id="sections">
+            <section>
+                <h1>Inflação e moedas do mundo</h1>
+                <p></p>
+                <p>Você sabe o que é inflação? <input class='var' id='x2' onchange="calcula(this)"> Você <span class='svar svarvazia'></span> convive co-m situações de inflação? Quais são os efeitos a longo prazo da inflação na vida das pessoas? A inflação
+                    é privilégio só do Brasil? Que tal compararmos os países do mundo e o Brasil a partir da inflação? Vamos fazer isso juntos? Bora!! pera o que estpa acouuu</p>
+            </section>
+            <section style="display: none">
+                <p>Chamamos de inflação a taxa que reflete o aumento geral de preços de um local em um período. Colocado de outra forma, é uma taxa que mostra a perda do poder de compra do dinheiro.</p>
+                <p>Vamos explicar melhor o que é a perda do poder de compra. Suponha, por exemplo, que uma pessoa tenha, hoje, um salário de R$ 2 000,00 e que ela compre um produto que custa R$ 200,00, ou seja, ela consegue comprar 10 unidades desse produto
+                    com seu salário. Considere que em um ano o salário dessa pessoa subirá 10%, mas que o valor do produto subirá 15%. Assim, seu salário passará a ser de R$ 2 200,00 e o produto passará a custar R$ 230,00, ou seja, essa pessoa, agora,
+                    só consegue comprar 9 unidades desse produto. Percebe que o poder de compra caiu?</p>
+                <p>Se essa situação se perpetuar ano após ano, com o salário sempre subindo 10% e o valor do produto subindo 15%, ano após ano, essa pessoa vai perder cada vez mais seu poder de compra, o que pode ser visto na tabela:</p>
+                <table>
+                    <tr>
+                        <th>Tempo (anos)</th>
+                        <th>Salário</th>
+                        <th>Produto</th>
+                        <th>Quantidade que</br>se pode comprar</th>
+                    </tr>
+                    <tr>
+                        <td>Hoje </td>
+                        <td>R$ 2 000,00 </td>
+                        <td>R$ 200,00 </td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>1 </td>
+                        <td>R$ 2 200,00 </td>
+                        <td>R$ 230,00 </td>
+                        <td>9</td>
+                    </tr>
+                    <tr>
+                        <td>2 </td>
+                        <td>R$ 2 420,00 </td>
+                        <td>R$ 264,50 </td>
+                        <td>9</td>
+                    </tr>
+                    <tr>
+                        <td>3 </td>
+                        <td>R$ 2 662,00 </td>
+                        <td>R$ 304,18 </td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>4 </td>
+                        <td>R$ 2 928,20 </td>
+                        <td>R$ 349,80 </td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>5 </td>
+                        <td>R$ 3 221,02 </td>
+                        <td>R$ 402,27 </td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>6 </td>
+                        <td>R$ 3 543,12 </td>
+                        <td>R$ 462,61 </td>
+                        <td>7</td>
+                    </tr>
+                </table>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p>Chegará um momento em que o salário dessa pessoa seá menor que o preço do produto, significando que a pessoa não o pode mais comprar. Isso ocorrerá após <input class='complete questao' type="text" name="complete" size="2" id="complete1"
+                        value="???" onclick="zera(this)" onchange="verifica(this)"> <span class='spanx'
+                        ">:</span> anos.</p><p>Outro efeito provocado pela inflação é que os números na escrita dos preços vão ficando cada vez maiores. Vamos pensar em um país imaginário: Bernoulliland, cuja moeda é o Dindim (D$) sendo a maior nota a nota de D$ 100,00. A economia de Bernoulliland não está muito boa e lá a inflação é de 30% ao mês. Imagine que hoje uma família pague por um jantar em um restaurante o valor de D$ 180,00, ou seja, bastam duas notas para pagar a conta e sobra um troco. Mas esse valor vai aumentar 30% a cada mês. Observe na tabela a seguir o que ocorre em um ano:</p><p></p><table><tr><th>Tempo (meses)</th><th>	Preço do produto (D$)</th><th>	Quantidade de notas</th></tr><tr><td>Hoje</td><td>	180,00</td><td>	2</td></tr><tr><td>1</td><td>	234,00	</td><td>3</td></tr><tr><td>2</td><td>	304,20	</td><td>4</td></tr><tr><td>3</td><td>	395,46</td><td>	4</td></tr><tr><td>4</td><td>	514,10</td><td>	6</td></tr><tr><td>5</td><td>	668,33</td><td>	7</td></tr><tr><td>6</td><td>	868,83</td><td>	9</td></tr><tr><td>7</td><td>	1 129,47</td><td>	12</td></tr><tr><td>8</td><td>	1 468,32</td><td>	15</td></tr><tr><td>9</td><td>	1 908,81</td><td>	20</td></tr><tr><td>10</td><td>	2 481,45</td><td>	25</td></tr><tr><td>11	</td><td>3 225,89</td><td>	33</td></tr><tr><td>12	</td><td>4 193,66</td><td>	42</td></tr></table><p></p><p></p><p>Mês após mês, a situação vai só piorando em Bernoulliland. No primeiro ano o preço passa de D$ 180,00 para D$ 4 193,66, mas no final do segundo ano o preço já será de D$ <input class='complete questao' type="text " name ="complete " size="8 " id="complete2 " value="??? " onclick = "zera(this) " onchange = "verifica(this) "> <span class='spanx'">:</span>, sendo necessárias <input class='complete questao' type="text" name="complete" size="3"
+                        id="complete3" value="???" onclick="zera(this)" onchange="verifica(this)"> <span class='spanx'
+                        ">:</span> notas para seu pagamento. </p><p>Você consegue se imaginar carregando essa quantidade de notas em sua carteira? Seria difícil, mas esse problema pode ser facilmente contornado pelo governo, basta criar notas com valores maiores. Por exemplo, se forem criadas notas de D$ 500,00 e D$ 1 000,00, no final do primeiro ano não precisaríamos de 42 notas para pagar a conta, 5 notas (4 de D$ 1.000,00 e uma de D$ 500,00) seriam suficientes.</p><p>Outro fato que ocorre é que, com o tempo, os centavos passam a ficar irrelevantes. Por exemplo, em Bernoulliland, quando do Dindim foi criado, o produto mais irrelevante custava D$ 0,01, o menor valor que um produto poderia ter. Mas com a inflação, em menos de um ano esse produto já custa D$ 0,10, passa mais algum tempo e ele custa D$ 1,00, depois D$ 10,00, e assim vai. Quando o produto mais irrelevante tem esse valor tão alto, ninguém se incomoda mais em arredondar um preço de D$ 5.658,32 para D$ 5.658,00 pois esses D$ 0,32 não compram nada, uma vez que o produto mais barato custa D$ 10,00. Assim, em algum momento, o governo de Bernoulliland pode decretar que não existem mais os centavos, e ninguém reclamaria. Com isso, as moedas de centavo virariam peças de colecionador e poderíamos ter moedas de D$ 1,00, D$ 5,00 e D$ 10,00, sendo que a menor nota poderia ser de D$ 50,00. </p><p>Você já percebeu que acabar com os centavos e criar notas com valores maiores também criarão um problema a longo prazo: notas com valores muito grandes. Já pensou em uma nota de um milhão de dindins? Em algum momento Bernoulliland precisará delas. O que o governo pode fazer? Trocar a moeda seria uma solução? Criar o Dindim Novo – DN$ – de tal forma que D$ 1.000,00 seja igual a DN$ 1,00. Essa medida resolve os problemas econômicos? Ou ela apenas ajudar a fazer os preços voltarem a ficar pequenos ?</p><p>Um novo governo, com mandato de cinco anos, está começando hoje em Bernoulliland e você é um consultor econômico do Ministério do Planejamento. Nesse início de governo, Bernoulliland possui notas de D$ 100,00, D$ 50,00, D$ 25,00, D$ 10,00, D$ 5,00 e D$ 1,00 e moedas de D$ 1,00, D$ 0,50, D$ 0,10, D$ 0,05 e D$ 0,01. O produto mais barato custa D$ 0,01 e o jantar para a família no restaurante custa D$ 180,00. A inflação, apesar de todos os esforços do governo, se mantem constante em 30% ao mês durante todo o mandato. Elabore um relatório justificado sugerindo quando abolir os centavos, quando lançar novas notas e moedas – com seus valores – quando tirar notas e moedas de circulação e quantas trocas de moeda quanto forem necessárias. Tenha em mente que produtos baratos devem ser pagos com moedas e produtos caros devem ser pagos com notas, não sendo nunca necessário mais do que cinco notas para pagar o jantar. É uma tradição de Bernoulliland que o valor da maior moeda seja sempre igual ao valor da menor nota, não deixe que uma inflação alta mude isso. Seu professor vai lhe dar instruções sobre como você deve apresentar esse trabalho.</p><p></p><h3>Bloco 2</h3><p>Bernoulliland é um país fictício e talvez você esteja pensando que em nenhum lugar do mundo se teria uma inflação de 30% ao mês para causar tantos problemas. Se você pensa assim, infelizmente, você está errado. Durante a década de 1980 a economia brasileira passou por maus momentos e, em particular, no ano de 1988 as taxas de inflação foram particularmente altas. Veja na tabela abaixo:</p><table><tr><th>Mês	</th><th>Inflação</th><th>	Mês	</th><th>Inflação</th><th>	Mês</th><th>	Inflação</th></tr><tr><td>Janeiro</td><td>	18,89%	</td><td>Maio</td><td>	17,42%	</td><td>Setembro</td><td>	27,45%</td></tr><tr><td>Fevereiro</td><td>	15,70%	</td><td>Junho</td><td>	22,00%	</td><td>Outubro	</td><td>25,62%</td></tr><tr><td>Março	</td><td>17,60%	</td><td>Julho	</td><td>21,91%	</td><td>Novembro	</td><td>27,94%</td></tr><tr><td>Abril	</td><td>19,29%	</td><td>Agosto	</td><td>21,59%	</td><td>Dezembro	</td><td>28,70%</td></tr></table><p></p><p>Com esses números mensais, podemos concluir que a inflação do Brasil em 1988 foi de aproximadamente <marc class='marc questao' id="marc4 " onmouseover="posiciona(this) ">???<span class='me'><span onclick='escolheu(this)'>264%</span><span onclick='escolheu(this)'>980%</span><span onclick='escolheu(this)'>1080%.</span></marc><span class='spanx'">X</span>.</p>
+                <p>Em janeiro de 1989 piorou mais ainda, com a inflação chegando a 37,49% nesse mês, o que forçou o governo a lançar mais um plano econômico, fazendo a inflação cair para 6,82% em março. A partir daí a inflação aumentou mês a mês, chegando
+                    em dezembro de 1989 em 51,50% ao mês. </p>
+                <p>Os três primeiros meses de 1990 foram os meses de maior inflação na história do país, com 67,55%, 75,73% e incríveis 82,39%, respectivamente. Novo governo, mais um plano econômico e no resto desse ano as taxas mensais variaram de 10% a
+                    20%. </p>
+                <p>Em 1991 tivemos taxas próximas de 20% ao mês no início e no fim do ano, sendo que abril e maio elas foram menores que 10%. Em 1992 só tivemos uma taxa mensal de inflação abaixo de 20%, foi em abril, quando foi de 19,93%. Como consolo,
+                    em nenhum mês de 1992 a inflação passou de 26%. Em 1993 a inflação subiu mais, ficando entre 27% e 37% em 11 meses desse ano, só sendo de 24,98% em maio.</p>
+                <p>Para 1994 piorou mais uma vez. Até junho, a inflação ficou de 40% a 50% em todos os meses. Mas em 1º de julho foi lançado o plano real e nesse mês a inflação foi de 6,84%. A partir daí, até o fim do ano, a inflação não passou de 3% ao
+                    mês. </p>
+                <p>Em 1995 tivemos apenas 0,99% de inflação em agosto e setembro, mas nos outros meses a inflação sempre foi maior que 1% ao mês, porém não passando de 2,67%, que foi a maior inflação mensal, em maio.</p>
+                <p>De 1996 em diante a inflação se comportou bem, ficando sempre baixa, normalmente abaixo de 1% ao mês, culminando com os 4,52% no ano inteiro de 2020. Como você nasceu depois de 1996, você se acostumou com inflação baixa, e nunca soube
+                    o que foi viver em um país com inflação mensal de 20%. </p>
+                <p>Converse com pessoas que trabalhavam no final dos anos 80 e descubra deles como era viver com uma inflação alta. Descubra quais estratégias eles usavam para não perder poder de compra e como eles sabiam qual era o preço justo a se pagar
+                    por um produto ou serviço. Se algum deles era um empresário, descubra como eles reajustavam os preços dos produtos. Seu professor vai lhes orientar sobre qual produto deve ser criado.</p>
+                <p>Após ter feito a pesquisa sobre viver com inflação alta e realizar todas as atividades desse bloco, avance para a próxima página clicando na seta abaixo.</p>
+                <p></p>
+                <h3>Bloco 3</h3>
+                <p>Viver com inflação de 50% ao mês não foi fácil, mas cenários piores já ocorreram na história. Em novembro de 2016 a inflação mensal da Venezuela foi de 219%, muito mais alta que os 30% de Bernoulliland e muito mais grave, pois Bernoulliland
+                    era uma ficção, mas na Venezuela pessoas morreram de verdade. A foto a seguir temos todo o dinheiro necessário para comprar 1kg de carne. Antes de ver a figura, tente pensar em quantas notas você deve ver. </p>
+                <div class="divimgocult" onclick="mostra(this)">
+                    <div class="imgbotao">Mostrar</div>
+                    <img class="imgocult ocult" src="https://matematizando.vercel.app/inflacao/9_P7IMJRf.jpg" height="250px" /></div>
+                <p></p>
+                <p>Apesar de não ser recente, a hiperinflação da Alemanha em 1923 foi muito marcante. Lá houve a incrível taxa de 21% por dia. Isso mesmo, os preços subiam 21% a cada dia. Isso é inimaginável pois significa que se um produto tinha certo preço
+                    no domingo, na
+                    <marc class='marc questao' id="marc5" onmouseover="posiciona(this)">???<span class='me'><span onclick='escolheu(this)'>terça-feira</span><span onclick='escolheu(this)'>quarta-feira</span><span onclick='escolheu(this)'>quinta-feira</span><span onclick='escolheu(this)'>sexta-feira</span></marc>
+                    <span class='spanx'
+                        ">X</span> esse mesmo produto já tinha mais que dobrado seu valor. Nessa época a moeda alemã era o marco e ninguém sabia quanto um produto valia. Por exemplo, se um jovem saísse em um sábado à noite e gastasse 1500 marcos, no sábado seguinte, com essa inflação de 21% ao dia, se ele comprasse exatamente as mesmas coisas que comprou no sábado anterior, esse jovem gastaria aproximadamente <input class='complete questao intervalo' type="text " name ="complete " size="10 " id="complete6 " value="??? " onclick = "zera(this) " onchange = "verifica(this) "> <span class='spanx'">:</span> e no outro sábado a mesma conta ficaria em aproximadamente
+                    <input
+                        class='complete questao intervalo' type="text" name="complete" size="12" id="complete7" value="???" onclick="zera(this)" onchange="verifica(this)">
+                        <span class='spanx' ">:</span>. </p><p>Como se não fosse possível piorar, o governo alemão da época custou a lançar notas com valores maiores, o que fez com que fosse necessário usar tanto dinheiro no dia a dia que as crianças brincavam fazendo castelos de dinheiro.</p><p></p><p>Como se não fosse possível piorar, o governo alemão da época custou a lançar notas com valores maiores, o que fez com que fosse necessário usar tanto dinheiro no dia a dia que as crianças brincavam fazendo castelos de dinheiro.</p><p></p>
+                    <div class="divimgocult " onclick="mostra(this) ">
+                    <div class="imgbotao ">Mostrar</div>
+                    <img class="imgocult ocult " src="https://img.joemonster.org/i/2016/08/1-20160803134716.jpg " height="400px
+                            "/></div><p></p><p>Se a situação ficou difícil para os alemães, imagine o que foi viver no Zimbábue em 2008, quando o país viveu uma inflação de 98% ao dia. Os comerciantes aumentavam seus preços constantemente e nunca você conseguia comprar um produto dois dias seguidos pelo mesmo valor. Com essa inflação, o governo começou a lançar notas de dólares do Zimbábue com valores cada vez maiores, chegando a lançar a nota com o maior valor de face desse século.</p><p>Você consegue imaginar qual foi o valor dessa nota?<div class='alternativas questao'></p><li onclick='marcou(this)'> 1 milhão</li><li onclick='marcou(this)'> 100 milhões</li><li onclick='marcou(this)'> 1 bilhão</li><li onclick='marcou(this)'> 100 bilhões </li><li onclick='marcou(this)'> 1 trilhão </li><li class='certa' onclick='marcou(this)'> 100 trilhões </div></li><p></p><img class='centro' src=' https://www.exchangerates247.com/wp-content/uploads/2019/10/100-trillion-zimbabwe-dollars.jpg'><p></p><h3>Bloco 4</h3><p>Já que estamos falando de dinheiro, sabemos que cada país possui sua própria moeda. Você sabe qual é a moeda de cada país?<div class="divdd
+                            "></p><table><tr><th>&emsp;&emsp;&emsp;&emsp;&emsp;País&emsp;&emsp;&emsp;&emsp;&emsp;</th><th>&emsp;&emsp;&emsp;&emsp;&emsp;	Moeda&emsp;&emsp;&emsp;&emsp;&emsp;</th></tr><tr><td>Brasil</td><td> [(Real)]</td></tr><tr><td>Estados Unidos</td><td>	[(Dólar)]</td></tr><tr><td>Reino Unido</td><td>	[(Libra Esterlina)]</td></tr><tr><td>União Europeia</td><td> [(Euro)]</td></tr><tr><td>Japão	</td><td> [(Iene)]</td></tr><tr><td>China	</td><td> [(Yuan)]</td></tr><tr><td>Coreia do Sul </td><td>	[(Won)]</td></tr><tr><td>Canadá	</td><td> [(Dólar)]</td></tr><tr><td>Kuwait	</td><td> [(Dinar)]</td></tr><tr><td>Bahrein	</td><td> [(Dinar)]</td></tr><tr><td>Omã	</td><td> [(Rial)]</td></tr><tr><td>Jordânia</td><td>	[(Dinar)]</td></tr><tr><td>Iran	</td><td> [(Rial)]</td></tr><tr><td>Vietnã	</td><td> [(Dong)]</td></tr></table></div><p>Você observou que alguns países têm moedas com mesmo nome, mas a moeda não é a mesma. Para distinguir, dizemos, por exemplo, que existe o dólar americano e o dólar canadense, como também existe o dólar australiano, mas cada um é um dólar diferente e, principalmente, com valores diferentes. Os valores de conversão das moedas mudam diariamente.</p><p>Pense que você está participando de um jogo em um programa de televisão. Você venceu e, como parte da diversão, você pode escolher seu prêmio. O programa se chama GANHE 1000 porque seu prêmio pode ser 1000 reais, 1000 dólares americanos, 1000 libras esterlinas, 1000 euros, 1000 ienes, 1000 yuans, 1000 wons, 1000 dólares canadenses, 1000 dinares do Kuwait, 1000 dinares do Bahrein, 1000 riais de Omã, 1000 dinares da Jordânia, 1000 riais do Iran ou 1000 dongs. Qual prêmio você quer receber?</p><p></p><p>Para responder de modo consciente a essa questão, você precisa de um conversor de moedas. O Banco Central do Brasil tem um, com dados oficiais, em </p><table><tr><td><a href="https://www.bcb.gov.br/conversao " target="_blank
+                            ">https://www.bcb.gov.br/conversao</a></td></tr></table><p></p><p>Use-o e indique abaixo qual prêmio você gostaria de ganhar.</p><div class='alternativas questao'><li class='certa' onclick='marcou(this)'> 1000 reais	</li><li class='certa' onclick='marcou(this)'> 1000 dólares canadenses</li><li class='certa' onclick='marcou(this)'>1000 dólares americanos	</li><li class='certa' onclick='marcou(this)'>1000 dinares do Kuwait</li><li class='certa' onclick='marcou(this)'>1000 libras esterlinas	</li><li class='certa' onclick='marcou(this)'>1000 dinares do Bahrein</li><li class='certa' onclick='marcou(this)'>1000 euros	</li><li class='certa' onclick='marcou(this)'>1000 riais de Omã</li><li class='certa' onclick='marcou(this)'>1000 ienes	</li><li class='certa' onclick='marcou(this)'>1000 dinares da Jordânia</li><li class='certa' onclick='marcou(this)'>1000 yuans	</li><li class='certa' onclick='marcou(this)'>1000 riais do Iran</li><li class='certa' onclick='marcou(this)'>1000 wons	</li><li class='certa' onclick='marcou(this)'>1000 dongs</div></li><p></p><p>Tem certeza de que quer o prêmio indicado?</p><p></p><h3>Bloco 5</h3><p>Como você viu, moedas diferentes possuem valores diferentes. Mas não é só isso. Moedas diferentes também possuem poder de compra diferente. Você já pensou nisso? O que se compra com um dólar nos EUA é bem diferente do que se compra com um dólar no Brasil. Você concorda com essa afirmação?  </p><p>Para ajudá-lo, vamos pensar com o sanduíche mais famoso do mundo: o BIG MAC. Suponha que, na cotação de certo dia, tenhamos que 1 dólar americano valha 5 reais brasileiros e que um sanduiche Big Mac custe R$ 20,00 no Brasil. Nessas condições, qual é o valor do Big Mac nos Estados Unidos?</p><p>A primeira resposta é 4 dólares, mas, pense bem, você acha que a diretoria da McDonald’s  norte americana fica em perfeita sintonia com a diretoria da  McDonald’s brasileira, acompanhando a cotação do dólar frente ao real, para que, juntas, controlem os preços e assim reflitam a cotação do dólar dia? E a diretoria dessa corporação no Reino Unido, na China, ou em qualquer outro país, faz o mesmo?</p><p> O preço de cada país é definido pelas condições locais e reflete como cada moeda pode comprar diferentes quantidades de um mesmo produto, independente da cotação da moeda.</p><p>Uma maneira de comparar o poder de compra relativo é comparar o preço de um mesmo produto em vários países. É isso que a revista The Economist faz, usando o Big Mac. Isso se justifica pelo fato desse sanduíche ser exatamente composto pelos mesmos ingredientes e realizado pelos memos processos no mundo todo: dois hambúrgueres, alface, queijo, molho especial, cebola e picles em um pão com gergelim, com as mesmas quantidades de ingredientes e por isso o BIG Mac pode gerar um índice de comparação de preços que reflete o poder de compra em cada país. Esse índice da Revista The Economist é chamado Índice Big Mac e ajuda muitos viajantes pelo mundo a pensar e planejar seus gastos em diferentes roteiros. </p><p>No site abaixo você encontra o preço, em dólares americanos, de um Big Mac em váris países do mundo. No momento em que escrevo esse texto, o Big Mac mais caro é o da Suíça, custando 7,29 dólares americanos, enquanto no Brasil é 3,98 dólares, ou seja, apesar de ser exatamente o mesmo produto, ele é muito mais barato no Brasil do que na Suíça. </p><p></p><table><tr><td><a href="https://bit.ly/2RT9XE1 " target="_blank
+                            ">Índice Big Mac</a></td></tr></table><p> </p><p>Consulte esse site e relacione o preço do Big Mac ao redor do mundo com o tamanho das economias dos países. Seria verdade que um país com economia maior tem um Big Mac mais caro?</p><p>Para terminar esse texto, propomos um trabalho final. Em equipes de quatro ou cinco estudantes, façam uma lista de gastos que uma família normalmente tem: habitação, alimentação, educação, lazer, ... . A seguir, escolham cinco países, um em cada continente, e descubra qual é o preço dos itens de sua lista nos países. Conclua determinando em qual país é mais barato e em qual país é mais caro o custo de vida, a moradia, a alimentação e tudo o mais necessário para se viver.</p><p></p></section></div></div><script>resp=[['52','52'],['97704,14','97704,14'],['978','978'],['980%','980%'],['quinta-feira','quinta-feira'],['4700<<4800','4700<<4800'],['21600<<21700','21600<<21700'],'']</script><script type="module ">        import renderMathInElement from "https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.mjs "; renderMathInElement(document.body); renderMathInElement( document.body, { delimiters: [ {left: "$$
+                            ", right: "$$ ", display: true}, {left: "\[ ", right:        "\] ", display: true}, {left: "$ ", right: "$ ", display: false}, {left: "\( ", right: "\) ", display: false} ] } ); document.addEventListener("DOMContentLoaded
+                            ", function() { renderMathInElement(document.body, { strict: false }); });    </script><script src="js/javas.js "></script></body></html>
