@@ -694,13 +694,12 @@ function savehtml() {
     }
     varresp = varresp + `'']`
 
-    var blob = new Blob([`${antes + prefixo + preview.innerHTML + posfixo}<script>${varresp}</script>${depois}`], { type: "text/plain;charset=utf-8" });
+    var blob = new Blob([`${antes + preview.innerHTML + posfixo}<script>${varresp}</script>${depois}`], { type: "text/plain;charset=utf-8" });
     saveAs(blob, "index.html");
 }
 
 
 function altura() {
-    console.log('rolou');
     let alturaf = document.documentElement.clientHeight
     let altura = Math.max(
         document.body.scrollHeight, document.documentElement.scrollHeight,

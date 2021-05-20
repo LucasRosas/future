@@ -687,7 +687,6 @@ function abresumario() {
 
 
 function altura() {
-    console.log('rolou');
     let alturaf = document.documentElement.clientHeight
     let altura = Math.max(
         document.body.scrollHeight, document.documentElement.scrollHeight,

@@ -169,7 +169,7 @@ p {
     transition: width 1s cubic-bezier(0.23, 1, 0.320, 1);
     width: var(--wbar);
     background: linear-gradient(146deg, var(--cor1) 0%, var(--cor2) 100%);
-    top: 52px;
+    top: 0px;
     z-index: 79;
 }
 
