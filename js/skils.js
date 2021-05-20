@@ -28,6 +28,7 @@ function mudaestilo(a, b) {
     document.documentElement.style.setProperty('--' + a, b);
     estilo = { corA: corA, corB: corB, dm: dm, imgcoverurl: imgcoverurl, covery: covery, font1: font1, font2: font2 }
     localStorage.setItem(localestilo, JSON.stringify(estilo))
+    depois = `<script type="module"> import renderMathInElement from "https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.mjs"; renderMathInElement(document.body); renderMathInElement( document.body, { delimiters: [ {left: "$$", right: "$$", display: true}, {left: "\\[",right: "\\]", display: true}, {left: "$", right: "$", display: false}, {left: "\\(", right: "\\)", display: false} ] } ); document.addEventListener("DOMContentLoaded", function() { renderMathInElement(document.body, { strict: false }); }); </script><script src="https://lucasrosas.github.io/future/js/javas.js"></script><script>estilo = ${JSON.stringify(estilo)}</script></body></html>`
 }
 
 function cornome(x) {

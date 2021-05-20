@@ -17,6 +17,8 @@ if (estilo.font2 == null) { var font2 = '' } else { var font2 = estilo.font2 }
 if (estilo.imgcoverurl == null) { var imgcoverurl = '' } else { var imgcoverurl = estilo.imgcoverurl }
 if (estilo.covery == null) { var covery = 0 } else { var covery = estilo.covery }
 
+depois = `<script type="module"> import renderMathInElement from "https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.mjs"; renderMathInElement(document.body); renderMathInElement( document.body, { delimiters: [ {left: "$$", right: "$$", display: true}, {left: "\\[",right: "\\]", display: true}, {left: "$", right: "$", display: false}, {left: "\\(", right: "\\)", display: false} ] } ); document.addEventListener("DOMContentLoaded", function() { renderMathInElement(document.body, { strict: false }); }); </script><script src="https://lucasrosas.github.io/future/js/javas.js"></script><script>estilo = ${JSON.stringify(estilo)}</script></body></html>`
+
 function inicia() {
     mudacor(estilo.corA, estilo.corB)
     setacores()
@@ -669,7 +671,6 @@ function abresumario() {
         document.getElementById('btsumarioa').classList.remove('fechar')
     }
 }
-var title = 'Livro Interativo'
 
 function titulo(x) {
     title = x.innerText
