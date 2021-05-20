@@ -12,6 +12,8 @@ function verifica(x) {
 }
 var dm = false
 
+function coverposition1() {}
+
 function inicia() {
     mudacor(estilo.corA, estilo.corB)
     mudaestilo('covery', estilo.covery)
@@ -625,7 +627,7 @@ function indice() {
 function scrola(x) {
     sum = document.getElementById('sumario2')
     bts = document.getElementById('btsumarioa')
-    if (x.scrollTop > 250) {
+    if (x.scrollTop > 100) {
         sum.classList.add('azul')
         bts.classList.add('btsazul')
 
