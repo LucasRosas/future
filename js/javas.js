@@ -14,6 +14,8 @@ var dm = false
 
 function coverposition1() {}
 
+function coverposition2() {}
+
 function inicia() {
     mudacor(estilo.corA, estilo.corB)
     mudaestilo('covery', estilo.covery)
