@@ -10,6 +10,7 @@ function verifica(x) {
         x.style.backgroundColor = 'darkred';
     }
 }
+var dm = false
 
 function inicia() {
     mudacor(estilo.corA, estilo.corB)
