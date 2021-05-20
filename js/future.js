@@ -643,7 +643,7 @@ function indice() {
 function scrola(x) {
     sum = document.getElementById('sumario2')
     bts = document.getElementById('btsumarioa')
-    document.documentElement.style.setProperty('--wbar', `${x.scrollTop / document.getElementsByTagName('p').length}% `);
+    document.documentElement.style.setProperty('--wbar', `${x.scrollTop / preview.getElementsByTagName('p').length}% `);
     if (x.scrollTop > 250) {
         sum.classList.add('azul')
         bts.classList.add('btsazul')
