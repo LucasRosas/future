@@ -11,36 +11,105 @@ function verifica(x) {
     }
 }
 
-var entrada
-var texto = 'memoria'
-var localestilo = 'estilo'
-var prefixo = `<div id="bm"></div><div id="progressbar"></div><div id='cover' onmousedown="coverposition1()" onmousemove="coverposition2()" onmouseup="boler = false"></div><div id="ss"><div id="sumario"></div><div id="sections"><section>`
-var posfixo = "</section></div></div>"
-var etapa = 'etapa'
-var preview = document.getElementById('preview')
-var blocodenotas = document.getElementById('blocodenotas')
-var sumario = ''
-var vetvar = {}
-var estilo = JSON.parse(localStorage.getItem('estilo'))
-if (estilo.dm == undefined) { var dm = false } else { var dm = estilo.dm }
-if (estilo.corA == null) { var corA = '' } else { var corA = estilo.corA }
-if (estilo.corB == null) { var corB = '' } else { var corB = estilo.corB }
-if (estilo.font1 == null) { var font1 = '' } else { var font1 = estilo.font1 }
-if (estilo.font2 == null) { var font2 = '' } else { var font2 = estilo.font2 }
-if (estilo.imgcoverurl == null) { var imgcoverurl = '' } else { var imgcoverurl = estilo.imgcoverurl }
-if (estilo.covery == null) { var covery = 0 } else { var covery = estilo.covery }
-
-depois = `<script type="module"> import renderMathInElement from "https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.mjs"; renderMathInElement(document.body); renderMathInElement( document.body, { delimiters: [ {left: "$$", right: "$$", display: true}, {left: "\\[",right: "\\]", display: true}, {left: "$", right: "$", display: false}, {left: "\\(", right: "\\)", display: false} ] } ); document.addEventListener("DOMContentLoaded", function() { renderMathInElement(document.body, { strict: false }); }); </script><script src="https://lucasrosas.github.io/future/js/javas.js"></script><script>estilo = ${JSON.stringify(estilo)}</script></body></html>`
-
 function inicia() {
     mudacor(estilo.corA, estilo.corB)
-    setacores()
-    roda()
-    ajustacontraste()
-    addImage(estilo.imgcoverurl)
-    mudaestilo('font1', font1)
-    mudaestilo('font2', font2)
-    mudaestilo('covery', covery + 'px')
+    mudaestilo('covery', estilo.covery)
+    dm = estilo.dm)
+mudaestilo('font1', estilo.font1)
+mudaestilo('font2', estilo.font2)
+mudaestilo('imgcoverurl', estilo.imgcoverurl)
+}
+
+function mudaestilo(a, b) {
+
+    document.documentElement.style.setProperty('--' + a, b);
+}
+
+
+function ajustacontraste() {
+    x = document.getElementsByClassName('cor')
+    for (i = 0; i < x.length; i++) {
+        mudaestilo(x[i].id + 'd', chroma(x[i].value).darken(2).hex())
+        if (chroma.contrast(x[i].value, '#000000') >= 6) {
+            mudaestilo(x[i].id + 'c', '#000000')
+        } else {
+            mudaestilo(x[i].id + 'c', '#ffffff')
+        }
+    }
+}
+
+
+function darkmode() {
+    if (dm == true) {
+        dm = false
+    } else {
+        dm = true
+    }
+    if (corA == '') {
+        mudacor('#023e8a', '#81b29a')
+    } else {
+        mudacor(corA, corB)
+    }
+}
+var vetcor
+
+function mudacor(a, b) {
+    if (a == '' && b == '') {
+
+    } else {
+        if (chroma.contrast('black', a) > chroma.contrast('black', b)) {
+            corA = b
+            corB = a
+        } else {
+            corA = a
+            corB = b
+        }
+        vetcor = {
+            cor1: corA,
+            cor2: corB,
+            cor3: chroma(corA).desaturate(3).hex(),
+            cor4: chroma(corB).saturate(2).hex(),
+            cor5: chroma(corB).desaturate(2).hex(),
+            cor6: chroma(corA).saturate(2).hex(),
+            cor7: chroma.blend(corA, corB, 'lighten').hex(),
+            cor8: chroma.mix(corA, corB, 0.1, 'lch').brighten(2.5).hex(),
+            cor9: chroma.blend(corA, corB, 'lighten').hex(),
+            cor10: chroma.average([corA, '#bcd53f', '#5FD274', '#5FD274', '#bcd53f'], 'rgb').hex(),
+        }
+    }
+
+    for (var prop in vetcor) {
+        mudaestilo(prop, vetcor[prop])
+    }
+    if (dm) {
+        mudaestilo('cor0', 'white')
+        mudaestilo('corback', '#1F2937')
+        for (var prop in vetcor) {
+            mudaestilo(prop, chroma(vetcor[prop]).luminance(0.5).hex())
+            mudaestilo(prop + 'd', chroma(vetcor[prop]).luminance(0.5).darken().hex())
+            mudaestilo(prop + 'ds', chroma(vetcor[prop]).luminance(0.5).darken(2).hex())
+
+            if (chroma.contrast(vetcor[prop], '#000000') >= 5) {
+                mudaestilo(prop + 'c', '#000000')
+            } else {
+                mudaestilo(prop + 'c', '#ffffff')
+            }
+        }
+    } else {
+        mudaestilo('cor0', 'black')
+        mudaestilo('corback', 'white')
+        for (var prop in vetcor) {
+            mudaestilo(prop, vetcor[prop])
+            mudaestilo(prop + 'd', chroma(vetcor[prop]).darken().hex())
+            mudaestilo(prop + 'dd', chroma(vetcor[prop]).darken(2).hex())
+
+            if (chroma.contrast(vetcor[prop], '#000000') >= 5) {
+                mudaestilo(prop + 'c', '#000000')
+            } else {
+                mudaestilo(prop + 'c', '#ffffff')
+            }
+        }
+    }
 
 }
 
@@ -67,107 +136,6 @@ function animafim() {
 }
 
 
-function roda() {
-    entrada = myCodeMirror.getValue('\n')
-    localStorage.setItem(texto, entrada)
-    entrada = imagem(link(tabela(complete(variaveis(entrada)))))
-    entrada = formatxt(entrada, '-d', '<div class="divdd">', '</div>')
-    entrada = formatxt(entrada, '-#', '<ol>', '</ol>')
-    entrada = formatxt(entrada, '-A', '<ol type=A>', '</ol>')
-    entrada = formatxt(entrada, '-I', '<ol type=I>', '</ol>')
-    entrada = formatxt(entrada, '-a', '<ol type="a">', '</ol>')
-    entrada = formatxt(entrada, '-m', `<div class='alternativas questao'>`, `</div>`)
-    entrada = formatxt(entrada, '***', '<u>', '</u>')
-    entrada = formatxt(entrada, '**', '<i>', '</i>')
-    entrada = formatxt(entrada, '*', '<strong>', '</strong>')
-
-    // agora entrada vira um vetor.
-    entrada = entrada.split('\n')
-    entrada = tags(entrada)
-
-    preview.innerHTML = prefixo + entrada + posfixo
-    dd()
-
-
-    renderMathInElement(preview, {
-        delimiters: [{
-            left: "$$",
-            right: "$$",
-            display: true
-        }, { left: "\\[", right: "\\]", display: true }, { left: "\\(", right: "\\)", display: false }]
-    })
-    indice()
-    botaocontinua(0)
-
-
-}
-
-function tags(x) {
-    for (i = 0; i < x.length; i++) {
-        inicio = x[i].substring(0, 1)
-        switch (inicio) {
-            case '_':
-                if (x[i] === '_') {
-                    x[i] = `</section><section style="display: none">`
-                }
-                break
-
-            case 'i':
-                if (x[i].substring(0, 3) === 'img') {
-
-                    x[i] = `<img class='esquerda' src='${x[i].split('img')[1].split(',')[0]}' height='${x[i].split('img')[1].split(',')[1]}'>`
-                } else {
-                    x[i] = `<p>${x[i]}</p>`
-                }
-                break
-            case ' ':
-                if (x[i].substring(0, 13) === '  img{oculta}') {
-                    x[i] = `
-                    <div class="divimgocult" onclick="mostra(this)">
-                    <div class="imgbotao">Mostrar</div>
-                    <img class="imgocult ocult" src="${x[i].split('  img{oculta}')[1].split(',')[0]}" height="${x[i].split('  img{oculta}')[1].split(',')[1]}"/></div>`
-                } else if (x[i].substring(0, 6) === '   img') {
-                    x[i] = `<img class='direita' src='${x[i].split('   img')[1]}'>`
-                } else if (x[i].substring(0, 5) === '  img') {
-                    x[i] = `<img class='centro' src='${x[i].split('  img')[1]}'>`
-                } else if (x[i].substring(0, 4) === ' img') {
-                    x[i] = `<img class='esquerda' src='${x[i].split('img')[1]}'>`
-                } else if (x[i].substring(0, 3) === '   ') {
-                    x[i] = `<p style="text-align: right; text-indent:0px">${x[i].split('   ')[1]}</p>`
-                } else if (x[i].substring(0, 2) === '  ') {
-                    x[i] = `<p style="text-align: center; text-indent:0px">${x[i].split('  ')[1]}</p>`
-                } else {
-                    x[i] = `<p>${x[i]}</p>`
-                }
-                break
-            case '<':
-                break
-            case '#':
-                if (x[i].substring(0, 3) === '###') {
-                    x[i] = `<h3>${x[i].split('###')[1]}</h3>`
-                } else if (x[i].substring(0, 2) === '##') {
-                    x[i] = `<h2>${x[i].split('##')[1]}</h2>`
-                } else {
-                    x[i] = `<h1>${x[i].split('#')[1]}</h1>`
-                }
-                break
-            case '-':
-                if (x[i].substring(0, 2) === '--') {
-                    x[i] = `<li class='certa' onclick='marcou(this)'>${x[i].split('--')[1]}</li>`
-                } else {
-                    x[i] = `<li onclick='marcou(this)'>${x[i].split('-')[1]}</li>`
-                }
-                break
-            default:
-                x[i] = `<p>${x[i]}</p>`
-
-
-        }
-
-    }
-    return x.join('')
-
-}
 
 function variaveis(x) {
     vetvar = []
@@ -656,7 +624,6 @@ function indice() {
 function scrola(x) {
     sum = document.getElementById('sumario2')
     bts = document.getElementById('btsumarioa')
-    mudaestilo('wbar', `${x.scrollTop / preview.getElementsByTagName('p').length}% `)
     if (x.scrollTop > 250) {
         sum.classList.add('azul')
         bts.classList.add('btsazul')

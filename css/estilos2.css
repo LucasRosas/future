@@ -204,6 +204,7 @@ p {
 }
 
 #sumario {
+    font-family: var(--font1);
     max-height: 70%;
     position: absolute;
     display: block;
