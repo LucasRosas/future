@@ -14,10 +14,10 @@ function verifica(x) {
 function inicia() {
     mudacor(estilo.corA, estilo.corB)
     mudaestilo('covery', estilo.covery)
-    dm = estilo.dm)
-mudaestilo('font1', estilo.font1)
-mudaestilo('font2', estilo.font2)
-mudaestilo('imgcoverurl', estilo.imgcoverurl)
+    dm = estilo.dm
+    mudaestilo('font1', estilo.font1)
+    mudaestilo('font2', estilo.font2)
+    mudaestilo('imgcoverurl', estilo.imgcoverurl)
 }
 
 function mudaestilo(a, b) {
