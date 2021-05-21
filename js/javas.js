@@ -629,7 +629,7 @@ function indice() {
 function scrola() {
     sum = document.getElementById('sumario2')
     bts = document.getElementById('btsumarioa')
-    if (document.documentElement.scrollTop > 100) {
+    if (document.documentElement.scrollTop > 200) {
         sum.classList.add('azul')
         bts.classList.add('btsazul')
 
