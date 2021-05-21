@@ -640,6 +640,13 @@ function scrola() {
     }
 }
 
+function posiciona(m) {
+
+    x = m.getBoundingClientRect().left
+    y = m.getBoundingClientRect().top + 20
+    mudaestilo('leftdef', x + 'px')
+    mudaestilo('topdef', y + 'px')
+}
 
 
 function abresumario() {
