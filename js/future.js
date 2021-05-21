@@ -1,7 +1,7 @@
 var entrada
 var texto = 'memoria'
 var localestilo = 'estilo'
-var prefixo = `<div id="bm"></div><div id="progressbar"></div><div id='cover' onmousedown="coverposition1()" onmousemove="coverposition2()" onmouseup="boler = false"></div><div id="ss"><div id="sumario"></div><div id="sections"><section onscroll="scrola()">`
+var prefixo = `<div id="bm" onscroll="scrola()"></div><div id="progressbar"></div><div id='cover' onmousedown="coverposition1()" onmousemove="coverposition2()" onmouseup="boler = false"></div><div id="ss"><div id="sumario"></div><div id="sections" onscroll="scrola()"><section onscroll="scrola()">`
 var posfixo = "</section></div></div>"
 var etapa = 'etapa'
 var preview = document.getElementById('preview')
